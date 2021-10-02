@@ -1,0 +1,6 @@
+env.yml
+!.gitignore
+app.ini
+main
+.idea
+.DS_Store
