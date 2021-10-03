@@ -49,14 +49,16 @@ func SetSignKey(key string) string {
 // CreateToken 生成一个token
 func (j *JWT) CreateToken(userId string) (string, error) {
 
+	// 过期时间处理
+	expiresAt := time.Now().Add(time.Second * time.Duration(config.GetInt64("jwt.ttl"))).Unix()
 	// 构造Payload
 	claims := jwt.StandardClaims{
-		ExpiresAt: time.Now().Add(time.Second * time.Duration(config.GetInt64("jwt.ttl"))).Unix(), // 过期时间
-		Id:        generator.SimpleUUID(),                                                         // Jti:token唯一标识符                                                          // JTI,JWT唯一码
-		IssuedAt:  time.Now().Unix(),                                                              // 颁发时间
-		Issuer:    config.GetString("app.url"),                                                    // 颁发机构
-		NotBefore: time.Now().Unix(),                                                              // 生效时间
-		Subject:   userId,                                                                         // 主题
+		ExpiresAt: expiresAt,                   // 过期时间
+		Id:        generator.SimpleUUID(),      // Jti:token唯一标识符
+		IssuedAt:  time.Now().Unix(),           // 颁发时间
+		Issuer:    config.GetString("app.url"), // 颁发机构
+		NotBefore: time.Now().Unix(),           // 生效时间
+		Subject:   userId,                      // 主题
 	}
 
 	// 生成token
