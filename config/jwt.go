@@ -18,6 +18,6 @@ func init() {
 		"jwt_secret": config.Env("JWT_SERET", "fast-go"),
 
 		// jwt 有效时间:单位秒,默认1小时过期
-		"jwt_ttl": config.Env("JWT_TTL", "360"),
+		"jwt_ttl": config.Env("JWT_TTL", "3600"),
 	})
 }
