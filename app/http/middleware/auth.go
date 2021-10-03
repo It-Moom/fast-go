@@ -4,14 +4,14 @@
  * @Author: Casso
  * @Date: 2021-10-03 15:52
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-03 17:00:00
+ * @Last Modified time: 2021-10-03 17:04:58
  */
 
 package middleware
 
 import (
 	"fast-go/app/handler/http_response"
-	"fast-go/pkg/utils/auth"
+	auth "fast-go/pkg/utils/jwt"
 
 	"github.com/gin-gonic/gin"
 )
