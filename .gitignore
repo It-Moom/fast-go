@@ -1,4 +1,4 @@
-env.yml
+.env
 !.gitignore
 app.ini
 main
