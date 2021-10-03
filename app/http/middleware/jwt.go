@@ -4,148 +4,61 @@
  * @Author: Casso
  * @Date: 2021-10-03 15:52
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-03 16:20:09
+ * @Last Modified time: 2021-10-03 16:55:45
  */
 
 package middleware
 
 import (
-	"errors"
-	"log"
-	"strings"
-	"time"
+	"fast-go/app/handler/http_response"
+	"fast-go/pkg/utils/auth"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 )
 
 // JWTAuth 中间件，检查token
 func JWTAuth() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		tokenStr := c.Request.Header.Get("Authorization")
-		var token = ""
+	return func(ctx *gin.Context) {
+
+		tokenStr := ctx.Request.Header.Get("Authorization")
 		if tokenStr == "" {
-			// response.ReturnJSON(c, http.StatusOK, statuscode.FailToken.Code, statuscode.FailToken.Msg, nil)
-			c.Abort()
-			return
-		} else {
-			// 自定义token拼接格式 -- 前端请求头需添加同样格式(请求拦截器里面设置)
-			if len(strings.Split(tokenStr, " ")) > 1 && strings.Split(tokenStr, " ")[0] == "GOJWT" {
-				token = strings.Split(tokenStr, " ")[1]
-			}
-		}
-		if token == "" {
-			// response.ReturnJSON(c, http.StatusOK, statuscode.FailToken.Code, statuscode.FailToken.Msg, nil)
-			c.Abort()
+			http_response.TokenExpired(ctx)
+			ctx.Abort()
 			return
 		}
 
-		log.Print("cost: ", time.Now().Format("2006-01-02 15:04:05"))
+		// // 自定义token拼接格式 -- 前端请求头需添加同样格式(请求拦截器里面设置)
+		// var token = ""
+		// if len(strings.Split(tokenStr, " ")) > 1 && strings.Split(tokenStr, " ")[0] == "GOJWT" {
+		// 	token = strings.Split(tokenStr, " ")[1]
+		// }
+		// if token == "" {
+		// 	http_response.TokenExpired(ctx)
+		// 	ctx.Abort()
+		// 	return
+		// }
 
-		j := NewJWT()
-		// parseToken 解析token包含的信息
-		claims, err := j.ParseToken(token)
+		j := auth.NewJWT()
+		claims, err := j.ParseToken(tokenStr)
 		if err != nil {
-			if err == TokenExpired {
-				// response.ReturnJSON(c, http.StatusOK, statuscode.ExprieToken.Code, statuscode.ExprieToken.Msg, nil)
-				c.Abort()
-				return
+			// token 过期
+			if err == auth.TokenExpired {
+				http_response.TokenExpiredWithMsg(ctx, "token 过期")
 			}
-			// response.ReturnJSON(c, http.StatusOK, statuscode.FailToken.Code, statuscode.FailToken.Msg, nil)
-			c.Abort()
+			// 无效token
+			if err == auth.TokenInvalid {
+				http_response.TokenExpiredWithMsg(ctx, "token 无效")
+			}
+			// token格式错误
+			if err == auth.TokenMalformed {
+				http_response.TokenExpiredWithMsg(ctx, "token 格式有误")
+			}
+			ctx.Abort()
 			return
 		}
+
 		// 继续交由下一个路由处理,并将解析出的信息传递下去
-		c.Set("mobile", claims.ID)
+		ctx.Set("userID", claims.ID)
+		ctx.Next()
 	}
-}
-
-// JWT 签名结构
-type JWT struct {
-	SigningKey []byte
-}
-
-var (
-	TokenExpired     error  = errors.New("Token is expired")
-	TokenNotValidYet error  = errors.New("Token not active yet")
-	TokenMalformed   error  = errors.New("That's not even a token")
-	TokenInvalid     error  = errors.New("Couldn't handle this token:")
-	SignKey          string = "fast-go"
-)
-
-// CustomClaims 载荷，可以加一些自己需要的信息
-type CustomClaims struct {
-	ID      int    `json:"id"`
-	TimeStr string `json:"timestr"`
-	jwt.StandardClaims
-}
-
-// NewJWT 新建一个jwt实例
-func NewJWT() *JWT {
-	return &JWT{
-		[]byte(GetSignKey()),
-	}
-}
-
-// GetSignKey 获取signKey
-func GetSignKey() string {
-	return SignKey
-}
-
-// SetSignKey 这是SignKey
-func SetSignKey(key string) string {
-	SignKey = key
-	return SignKey
-}
-
-// CreateToken 生成一个token
-func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
-	// 设置自定义token过期时间
-	claims.StandardClaims.ExpiresAt = time.Now().Add(time.Minute * 60).Unix() // 测试时60S过期 : time.Second * 60
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(j.SigningKey)
-}
-
-// ParseToken 解析Tokne
-func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return j.SigningKey, nil
-	})
-	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, TokenMalformed
-			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				// Token is expired
-				return nil, TokenExpired
-			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, TokenNotValidYet
-			} else {
-				return nil, TokenInvalid
-			}
-		}
-	}
-	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
-		return claims, nil
-	}
-	return nil, TokenInvalid
-}
-
-// RefreshToken 更新token
-func (j *JWT) RefreshToken(tokenString string) (string, error) {
-	jwt.TimeFunc = func() time.Time {
-		return time.Unix(0, 0)
-	}
-	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return j.SigningKey, nil
-	})
-	if err != nil {
-		return "", err
-	}
-	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
-		jwt.TimeFunc = time.Now
-		claims.StandardClaims.ExpiresAt = time.Now().Add(1 * time.Hour).Unix()
-		return j.CreateToken(*claims)
-	}
-	return "", TokenInvalid
 }

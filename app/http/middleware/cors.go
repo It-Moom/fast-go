@@ -3,16 +3,17 @@
  * @Description: 跨域中间件
  * @Author: gabbymrh
  * @Date: 2021-10-03 14:31:19
- * @Last Modified by: gabbymrh
- * @Last Modified time: 2021-10-03 14:31:19
+ * @Last Modified by: Casso-Wong
+ * @Last Modified time: 2021-10-03 16:48:04
  */
 
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Cors 跨域处理函数
