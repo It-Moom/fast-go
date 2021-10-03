@@ -50,6 +50,7 @@
 | [gorm-mysql](https://github.com/go-gorm/mysql) | GORM-MySQL依赖 |
 | [viper](https://github.com/spf13/viper) | 配置文件处理 |
 | [jwt](https://github.com/dgrijalva/jwt-go) | JWT |
+| [go.uuid](https://github.com/satori/go.uuid) | UUID生成器 |
 
 ## Commit提交规范
 

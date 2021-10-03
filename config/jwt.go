@@ -15,9 +15,9 @@ func init() {
 	config.Add("jwt", config.StrMap{
 
 		// jwt 密钥
-		"jwt_secret": config.Env("JWT_SECRET", "fast-go"),
+		"secret": config.Env("JWT_SECRET", "fast-go"),
 
 		// jwt 有效时间:单位秒,默认1小时过期
-		"jwt_ttl": config.Env("JWT_TTL", "3600"),
+		"ttl": config.Env("JWT_TTL", 3600),
 	})
 }
