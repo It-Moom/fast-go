@@ -1,10 +1,10 @@
 /**
  * @PackageName: middleware
- * @Description: token生成&解析
+ * @Description: 鉴权中间件
  * @Author: Casso
  * @Date: 2021-10-03 15:52
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-03 16:55:45
+ * @Last Modified time: 2021-10-03 17:00:00
  */
 
 package middleware
