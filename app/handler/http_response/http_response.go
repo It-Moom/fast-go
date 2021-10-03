@@ -158,22 +158,22 @@ func DataErrorWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
 }
 
 // RequestSuccess 操作成功(默认)
-func RequestSuccess(ctx *gin.Context) {
+func RequestSuccess(ctx *gin.Context, data interface{}) {
 	ctx.JSON(http.StatusOK, responseBody{
 		Code:    response_code.REQUEST_SUCCESS,
 		Success: true,
-		Data:    nil,
+		Data:    data,
 		Message: response_message.REQUEST_SUCCESS,
 		Errors:  []string{},
 	})
 }
 
 // RequestSuccessWithMsg 操作成功(指定message)
-func RequestSuccessWithMsg(ctx *gin.Context, msg string) {
+func RequestSuccessWithMsg(ctx *gin.Context, data interface{}, msg string) {
 	ctx.JSON(http.StatusOK, responseBody{
 		Code:    response_code.REQUEST_SUCCESS,
 		Success: true,
-		Data:    nil,
+		Data:    data,
 		Message: msg,
 		Errors:  []string{},
 	})
