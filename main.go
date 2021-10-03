@@ -22,5 +22,8 @@ func init() {
 
 // 入口函数
 func main() {
+	// 初始化 SQL
+	bootstrap.SetupDB()
+	// 初始化服务及路由
 	bootstrap.SetupRoute().Run(":" + pc.GetString("app.port"))
 }

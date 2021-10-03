@@ -1,6 +1,6 @@
 /*
  * @PackageName: bootstrap
- * @Description: 路由启动文件
+ * @Description: 路由初始化
  * @Author: gabbymrh
  * @Date: 2021-10-03 14:32:52
  * @Last Modified by: gabbymrh
