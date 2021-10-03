@@ -43,11 +43,10 @@ func JwtAuth() gin.HandlerFunc {
 		if err != nil {
 			http_response.TokenExpired(ctx)
 			ctx.Abort()
-			return
 		}
 
 		// 继续交由下一个路由处理,并将解析出的信息传递下去
-		ctx.Set("userId", claims.Id)
+		ctx.Set("userId", claims.Subject)
 		ctx.Next()
 	}
 }
