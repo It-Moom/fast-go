@@ -10,11 +10,9 @@
 package main
 
 import (
-	"fast-go/app/handler/http_response"
+	"fast-go/bootstrap"
 	"fast-go/config"
-	c "fast-go/pkg/config"
-	"fast-go/pkg/logger"
-	"github.com/gin-gonic/gin"
+	pc "fast-go/pkg/config"
 )
 
 func init() {
@@ -22,17 +20,7 @@ func init() {
 	config.Initialize()
 }
 
-func homeHandler(ctx *gin.Context) {
-	http_response.RequestSuccess(ctx)
-}
-
+// 入口函数
 func main() {
-
-	r := gin.Default()
-	r.GET("/", homeHandler)
-	err := r.Run(":" + c.GetString("app.port"))
-	if err != nil {
-		logger.LogError(err)
-	}
-
+	bootstrap.SetupRoute().Run(":" + pc.GetString("app.port"))
 }
