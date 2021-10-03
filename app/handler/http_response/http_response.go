@@ -18,11 +18,11 @@ import (
 
 // ResponseBody 返回数据结构体
 type responseBody struct {
-	Code    int         `json:"code"`
-	Success bool        `json:"success"`
-	Data    interface{} `json:"data"`
-	Message string      `json:"message"`
-	Errors  []string    `json:"errors"`
+	Code    int         `json:"code"`    // 返回code
+	Success bool        `json:"success"` // 成功状态:true/false
+	Data    interface{} `json:"data"`    // 数据体
+	Message string      `json:"message"` // 提示消息
+	Errors  []string    `json:"errors"`  // 错误列表(若有)
 }
 
 // ParamError 参数有误(默认)

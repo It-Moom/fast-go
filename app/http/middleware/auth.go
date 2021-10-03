@@ -16,8 +16,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// JWTAuth 中间件，检查token
-func JWTAuth() gin.HandlerFunc {
+// JwtAuth 中间件，检查token
+func JwtAuth() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		tokenStr := ctx.Request.Header.Get("Authorization")
@@ -41,24 +41,13 @@ func JWTAuth() gin.HandlerFunc {
 		j := auth.NewJWT()
 		claims, err := j.ParseToken(tokenStr)
 		if err != nil {
-			// token 过期
-			if err == auth.TokenExpired {
-				http_response.TokenExpiredWithMsg(ctx, "token 过期")
-			}
-			// 无效token
-			if err == auth.TokenInvalid {
-				http_response.TokenExpiredWithMsg(ctx, "token 无效")
-			}
-			// token格式错误
-			if err == auth.TokenMalformed {
-				http_response.TokenExpiredWithMsg(ctx, "token 格式有误")
-			}
+			http_response.TokenExpired(ctx)
 			ctx.Abort()
 			return
 		}
 
 		// 继续交由下一个路由处理,并将解析出的信息传递下去
-		ctx.Set("userID", claims.ID)
+		ctx.Set("userId", claims.Id)
 		ctx.Next()
 	}
 }

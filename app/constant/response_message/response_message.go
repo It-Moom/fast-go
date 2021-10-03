@@ -33,7 +33,7 @@ const (
 	QUERY_VOID = "查询为空"
 
 	// TOKEN_EXPIRED Token无效
-	TOKEN_EXPIRED = "Token无效"
+	TOKEN_EXPIRED = "token无效"
 
 	// TOO_MANY_REQUEST 请求过于频繁
 	TOO_MANY_REQUEST = "请求过于频繁"
