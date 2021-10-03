@@ -10,10 +10,8 @@
 package middleware
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // Cors 跨域处理函数
@@ -28,14 +26,11 @@ func Cors() gin.HandlerFunc {
 			ctx.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Cache-Control, Content-Language, Content-Type")
 			ctx.Header("Access-Control-Allow-Credentials", "true")
 		}
+
+		// 放行option
 		if method == "OPTIONS" {
 			ctx.AbortWithStatus(http.StatusNoContent)
 		}
-		defer func() {
-			if err := recover(); err != nil {
-				log.Printf("Panic info is: %v", err)
-			}
-		}()
 		ctx.Next()
 	}
 }
