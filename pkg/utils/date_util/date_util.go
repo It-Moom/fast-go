@@ -4,7 +4,7 @@
  * @Author: Casso-Wong
  * @Date: 2021-10-04 19:31:04
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-04 20:39:45
+ * @Last Modified time: 2021-10-04 20:54:19
  */
 package date_util
 
@@ -24,7 +24,6 @@ func ParseTime(str string) (time.Time, error) {
 	if str == "" {
 		return time.Now(), errors.New("empty string")
 	}
-
 	return time.ParseInLocation("2006-01-02 15:04:05", str, time.Local)
 }
 
@@ -33,7 +32,7 @@ func ParseTimeStamp(str string) (int64, error) {
 	if str == "" {
 		return 0, errors.New("empty string")
 	}
-
+	// 时间字符串解析
 	t, err := time.ParseInLocation("2006-01-02 15:04:05", str, time.Local)
 	if err != nil {
 		return 0, err
@@ -50,33 +49,32 @@ func StartToday() time.Time {
 }
 
 // GetDuration 传入时间字符串，获取相差时间秒数，stime:开始时间;etime：结束时间
-func GetDurationByString(stime, etime string) (res int64, errs error) {
-	if stime == "" || etime == "" {
+func GetDurationByString(start, end string) (int64, error) {
+	if start == "" || end == "" {
 		return 0, errors.New("empty string")
 	}
-	t1, err := time.ParseInLocation("2006-01-02 15:04:05", stime, time.Local)
-	t2, err2 := time.ParseInLocation("2006-01-02 15:04:05", etime, time.Local)
+	// 时间字符串解析
+	startTime, errStart := time.ParseInLocation("2006-01-02 15:04:05", start, time.Local)
+	endTime, errEnd := time.ParseInLocation("2006-01-02 15:04:05", end, time.Local)
+	if errStart != nil {
+		return 0, errStart
+	}
+	if errEnd != nil {
+		return 0, errEnd
+	}
 
 	// 开始时间必须在结束时间之前
-	if err == nil && err2 == nil && t1.Before(t2) {
-		res = t2.Unix() - t1.Unix()
-		errs = nil
-	} else {
-		res = 0
-		errs = err
+	if startTime.Before(endTime) {
+		return endTime.Unix() - startTime.Unix(), nil
 	}
-	return
+	return 0, errors.New("开始时间晚于结束时间")
 }
 
 // GetDuration 传入时间，获取相差时间秒数，stime:开始时间;etime：结束时间
-func GetDurationByTime(stime, etime time.Time) (res int64, errs error) {
+func GetDurationByTime(start, end time.Time) (int64, error) {
 	// 开始时间必须在结束时间之前
-	if stime.Before(etime) {
-		res = etime.Unix() - stime.Unix()
-		errs = nil
-	} else {
-		res = 0
-		errs = errors.New("开始时间晚于结束时间")
+	if start.Before(end) {
+		return end.Unix() - start.Unix(), nil
 	}
-	return
+	return 0, errors.New("开始时间晚于结束时间")
 }
