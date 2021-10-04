@@ -4,7 +4,7 @@
  * @Author: Casso-Wong
  * @Date: 2021-10-04 19:31:04
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-04 20:59:29
+ * @Last Modified time: 2021-10-04 21:08:40
  */
 package date_util
 
@@ -20,10 +20,28 @@ var (
 	tem4 = "15:04:05"            // 仅有时分秒格式
 )
 
-// LocalNow 返回本地标准时间字符串
-func LocalNow() string {
+// FulltimeNow 返回本地标准时间字符串--横杠
+func FulltimeNow() string {
 	t := time.Now().UTC().Local()
 	return t.Format(tem1)
+}
+
+// FulltimeSlantNow 返回本地标准时间字符串--斜杠
+func FulltimeSlantNow() string {
+	t := time.Now().UTC().Local()
+	return t.Format(tem2)
+}
+
+// YmdNow 返回本地标准时间字符串--年月日
+func YmdNow() string {
+	t := time.Now().UTC().Local()
+	return t.Format(tem3)
+}
+
+// HmsNow 返回本地标准时间字符串--时分秒
+func HmsNow() string {
+	t := time.Now().UTC().Local()
+	return t.Format(tem4)
 }
 
 // ParseTime 输入时间字符串，返回时间
