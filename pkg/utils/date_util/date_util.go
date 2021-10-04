@@ -4,7 +4,7 @@
  * @Author: Casso-Wong
  * @Date: 2021-10-04 19:31:04
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-04 20:54:19
+ * @Last Modified time: 2021-10-04 20:59:29
  */
 package date_util
 
@@ -13,10 +13,17 @@ import (
 	"time"
 )
 
+var (
+	tem1 = "2006-01-02 15:04:05" // 默认格式
+	tem2 = "2006/01/02 15:04:05" // 斜杠格式
+	tem3 = "2006/01/02"          // 仅有年月日格式
+	tem4 = "15:04:05"            // 仅有时分秒格式
+)
+
 // LocalNow 返回本地标准时间字符串
 func LocalNow() string {
 	t := time.Now().UTC().Local()
-	return t.Format("2006-01-02 15:04:05")
+	return t.Format(tem1)
 }
 
 // ParseTime 输入时间字符串，返回时间
@@ -24,7 +31,7 @@ func ParseTime(str string) (time.Time, error) {
 	if str == "" {
 		return time.Now(), errors.New("empty string")
 	}
-	return time.ParseInLocation("2006-01-02 15:04:05", str, time.Local)
+	return time.ParseInLocation(tem1, str, time.Local)
 }
 
 // ParseTimeStamp 输入时间字符串，返回时间戳
@@ -33,7 +40,7 @@ func ParseTimeStamp(str string) (int64, error) {
 		return 0, errors.New("empty string")
 	}
 	// 时间字符串解析
-	t, err := time.ParseInLocation("2006-01-02 15:04:05", str, time.Local)
+	t, err := time.ParseInLocation(tem1, str, time.Local)
 	if err != nil {
 		return 0, err
 	}
@@ -54,8 +61,8 @@ func GetDurationByString(start, end string) (int64, error) {
 		return 0, errors.New("empty string")
 	}
 	// 时间字符串解析
-	startTime, errStart := time.ParseInLocation("2006-01-02 15:04:05", start, time.Local)
-	endTime, errEnd := time.ParseInLocation("2006-01-02 15:04:05", end, time.Local)
+	startTime, errStart := time.ParseInLocation(tem1, start, time.Local)
+	endTime, errEnd := time.ParseInLocation(tem1, end, time.Local)
 	if errStart != nil {
 		return 0, errStart
 	}
