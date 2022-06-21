@@ -103,6 +103,7 @@ func RequestError(ctx *gin.Context, args ...interface{}) {
 	responseResult(ctx, response_code.REQUEST_FAILS, response_message.REQUEST_FAILS, args...)
 }
 
+// responseResult 响应结果
 func responseResult(ctx *gin.Context, resCode int, resMsg string, args ...interface{}) {
 	// 取出args长度
 	argsLen := len(args)
