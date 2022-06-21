@@ -12,8 +12,10 @@ package http_response
 import (
 	"fast-go/app/constant/response_code"
 	"fast-go/app/constant/response_message"
-	"github.com/gin-gonic/gin"
 	"net/http"
+	"reflect"
+
+	"github.com/gin-gonic/gin"
 )
 
 // ResponseBody 返回数据结构体
@@ -25,136 +27,22 @@ type responseBody struct {
 	Errors  []string    `json:"errors"`  // 错误列表(若有)
 }
 
-// ParamError 参数有误(默认)
-func ParamError(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PARAM_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: response_message.PARAM_ERROR,
-		Errors:  []string{},
-	})
+// ParamError 参数有误
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func ParamError(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.PARAM_ERROR, response_message.PARAM_ERROR, args...)
 }
 
-// ParamErrorWithMsg 参数有误(指定message)
-func ParamErrorWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PARAM_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
+// DataExists 数据已存在
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func DataExists(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.DATA_EXIST, response_message.DATA_EXIST, args...)
 }
 
-// ParamErrorWithErrors 参数有误(指定errors)
-func ParamErrorWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PARAM_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: response_message.PARAM_ERROR,
-		Errors:  errors,
-	})
-}
-
-// ParamErrorWithMsgAndErrors 参数有误(指定message和errors)
-func ParamErrorWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PARAM_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
-
-// DataExists 数据已存在(默认)
-func DataExists(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_EXIST,
-		Success: false,
-		Data:    nil,
-		Message: response_message.DATA_EXIST,
-		Errors:  []string{},
-	})
-}
-
-// DataExistsWithMsg 数据已存在(指定message)
-func DataExistsWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_EXIST,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
-
-// DataExistsWithErrors 数据已存在(指定errors)
-func DataExistsWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_EXIST,
-		Success: false,
-		Data:    nil,
-		Message: response_message.DATA_EXIST,
-		Errors:  errors,
-	})
-}
-
-// DataExistsWithMsgAndErrors 数据已存在(指定message和errors)
-func DataExistsWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_EXIST,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
-
-// DataError 数据错误(默认)
-func DataError(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: response_message.DATA_ERROR,
-		Errors:  []string{},
-	})
-}
-
-// DataErrorWithMsg 数据错误(指定message)
-func DataErrorWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
-
-// DataErrorWithErrors 数据错误(指定errors)
-func DataErrorWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: response_message.DATA_ERROR,
-		Errors:  errors,
-	})
-}
-
-// DataErrorWithMsgAndErrors 数据错误(指定message和errors)
-func DataErrorWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.DATA_ERROR,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
+// DataError 数据错误
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func DataError(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.DATA_ERROR, response_message.DATA_ERROR, args...)
 }
 
 // RequestSuccess 操作成功(默认)
@@ -179,266 +67,93 @@ func RequestSuccessWithMsg(ctx *gin.Context, data interface{}, msg string) {
 	})
 }
 
-// RequestDeny 禁止访问(默认)
-func RequestDeny(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_DENY,
-		Success: false,
-		Data:    nil,
-		Message: response_message.REQUEST_DENY,
-		Errors:  []string{},
-	})
+// RequestDeny 禁止访问
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func RequestDeny(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.REQUEST_DENY, response_message.REQUEST_DENY, args...)
 }
 
-// RequestDenyWithMsg 禁止访问(指定message)
-func RequestDenyWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_DENY,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
+// PermissionDeny 权限不足
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func PermissionDeny(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.PERMISSION_DENY, response_message.PERMISSION_DENY, args...)
 }
 
-// RequestDenyWithErrors 禁止访问(指定errors)
-func RequestDenyWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_DENY,
-		Success: false,
-		Data:    nil,
-		Message: response_message.REQUEST_DENY,
-		Errors:  errors,
-	})
+// QueryVoid 结果为空
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func QueryVoid(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.QUERY_VOID, response_message.QUERY_VOID, args...)
 }
 
-// RequestDenyWithMsgAndErrors 禁止访问(指定message和errors)
-func RequestDenyWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_DENY,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
+// TokenExpired Token无效
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func TokenExpired(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.TOKEN_EXPIRED, response_message.TOKEN_EXPIRED, args...)
 }
 
-// PermissionDeny 权限不足(默认)
-func PermissionDeny(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PERMISSION_DENY,
-		Success: false,
-		Data:    nil,
-		Message: response_message.PERMISSION_DENY,
-		Errors:  []string{},
-	})
+// TooManyRequest 请求过于频繁
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func TooManyRequest(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.TOO_MANY_REQUEST, response_message.TOO_MANY_REQUEST, args...)
 }
 
-// PermissionDenyWithMsg 权限不足(指定message)
-func PermissionDenyWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PERMISSION_DENY,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
+// RequestError 操作失败
+// (函数接收1-2个参数，只接受string或[]string类型错误参数，如果为2个参数,则第1个参数必须是string，第二个参数必须是[]string)
+func RequestError(ctx *gin.Context, args ...interface{}) {
+	responseResult(ctx, response_code.REQUEST_FAILS, response_message.REQUEST_FAILS, args...)
 }
 
-// PermissionDenyWithErrors 权限不足(指定errors)
-func PermissionDenyWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PERMISSION_DENY,
-		Success: false,
-		Data:    nil,
-		Message: response_message.PERMISSION_DENY,
-		Errors:  errors,
-	})
-}
+func responseResult(ctx *gin.Context, resCode int, resMsg string, args ...interface{}) {
+	// 取出args长度
+	argsLen := len(args)
 
-// PermissionDenyWithMsgAndErrors 权限不足(指定message和errors)
-func PermissionDenyWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.PERMISSION_DENY,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
+	// 通过switch判断参数类型
+	switch {
 
-// QueryVoid 结果为空(默认)
-func QueryVoid(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.QUERY_VOID,
-		Success: false,
-		Data:    nil,
-		Message: response_message.PERMISSION_DENY,
-		Errors:  []string{},
-	})
-}
+	// 如果传入参数数量等于1，则判断参数类型
+	case argsLen == 1:
+		// 如果参数类型为string，则直接返回message
+		if reflect.TypeOf(args[0]).String() == "string" {
+			ctx.JSON(http.StatusOK, responseBody{
+				Code:    resCode,
+				Success: false,
+				Data:    nil,
+				Message: args[0].(string),
+				Errors:  []string{},
+			})
+		}
+		// 如果参数类型为[]string，则直接返回errors
+		if reflect.TypeOf(args[0]).String() == "[]string" {
+			ctx.JSON(http.StatusOK, responseBody{
+				Code:    resCode,
+				Success: false,
+				Data:    nil,
+				Message: resMsg,
+				Errors:  args[0].([]string),
+			})
+		}
 
-// QueryVoidWithMsg 结果为空(指定message)
-func QueryVoidWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.QUERY_VOID,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
+	// 如果传入参数数量等于2，则判断参数类型
+	case argsLen == 2:
+		// 如果第一个参数类型为string，则直接返回message,errors
+		if reflect.TypeOf(args[0]).String() == "string" {
+			ctx.JSON(http.StatusOK, responseBody{
+				Code:    resCode,
+				Success: false,
+				Data:    nil,
+				Message: args[0].(string),
+				Errors:  args[1].([]string),
+			})
+		}
 
-// QueryVoidWithErrors 结果为空(指定errors)
-func QueryVoidWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.QUERY_VOID,
-		Success: false,
-		Data:    nil,
-		Message: response_message.QUERY_VOID,
-		Errors:  errors,
-	})
-}
-
-// QueryVoidWithMsgAndErrors 结果为空(指定message和errors)
-func QueryVoidWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.QUERY_VOID,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
-
-// TokenExpired Token无效(默认)
-func TokenExpired(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOKEN_EXPIRED,
-		Success: false,
-		Data:    nil,
-		Message: response_message.TOKEN_EXPIRED,
-		Errors:  []string{},
-	})
-}
-
-// TokenExpiredWithMsg Token无效(指定message)
-func TokenExpiredWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOKEN_EXPIRED,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
-
-// TokenExpiredWithErrors Token无效(指定errors)
-func TokenExpiredWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOKEN_EXPIRED,
-		Success: false,
-		Data:    nil,
-		Message: response_message.TOKEN_EXPIRED,
-		Errors:  errors,
-	})
-}
-
-// TokenExpiredWithMsgAndErrors Token无效(指定message和errors)
-func TokenExpiredWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOKEN_EXPIRED,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
-
-// TooManyRequest 请求过于频繁(默认)
-func TooManyRequest(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOO_MANY_REQUEST,
-		Success: false,
-		Data:    nil,
-		Message: response_message.TOO_MANY_REQUEST,
-		Errors:  []string{},
-	})
-}
-
-// TooManyRequestWithMsg 请求过于频繁(指定message)
-func TooManyRequestWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOO_MANY_REQUEST,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
-
-// TooManyRequestWithErrors 请求过于频繁(指定errors)
-func TooManyRequestWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOO_MANY_REQUEST,
-		Success: false,
-		Data:    nil,
-		Message: response_message.TOKEN_EXPIRED,
-		Errors:  errors,
-	})
-}
-
-// TooManyRequestWithMsgAndErrors 请求过于频繁(指定message和errors)
-func TooManyRequestWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.TOO_MANY_REQUEST,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
-}
-
-// RequestError 操作失败(默认)
-func RequestError(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_FAILS,
-		Success: false,
-		Data:    nil,
-		Message: response_message.REQUEST_FAILS,
-		Errors:  []string{},
-	})
-}
-
-// RequestErrorWithMsg 操作失败(指定message)
-func RequestErrorWithMsg(ctx *gin.Context, msg string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_FAILS,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  []string{},
-	})
-}
-
-// RequestErrorWithErrors 操作失败(指定errors)
-func RequestErrorWithErrors(ctx *gin.Context, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_FAILS,
-		Success: false,
-		Data:    nil,
-		Message: response_message.TOKEN_EXPIRED,
-		Errors:  errors,
-	})
-}
-
-// RequestErrorWithMsgAndErrors 操作失败(指定message和errors)
-func RequestErrorWithMsgAndErrors(ctx *gin.Context, msg string, errors []string) {
-	ctx.JSON(http.StatusOK, responseBody{
-		Code:    response_code.REQUEST_FAILS,
-		Success: false,
-		Data:    nil,
-		Message: msg,
-		Errors:  errors,
-	})
+	// 返回默认消息
+	default:
+		ctx.JSON(http.StatusOK, responseBody{
+			Code:    resCode,
+			Success: false,
+			Data:    nil,
+			Message: resMsg,
+			Errors:  []string{},
+		})
+	}
 }
