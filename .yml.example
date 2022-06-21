@@ -1,0 +1,26 @@
+app:
+  name: FastGo
+  env: local
+  debug: true
+  secret: 123456
+  url: http://localhost:8080
+  port: 8080
+
+log:
+  level: debug
+
+database:
+  driver: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: fast_go
+  username: root
+  password: root
+
+session:
+  driver: cookie
+  name: fast-go-session
+
+jwt:
+  secret: fast-go
+  ttl: 3600

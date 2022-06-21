@@ -15,21 +15,21 @@ func init() {
 	config.Add("app", config.StrMap{
 
 		// 应用名称，暂时没有使用到
-		"name": config.Env("APP_NAME", "FastGo"),
+		"name": config.Env("app.name", "FastGo"),
 
 		// 当前环境，用以区分多环境
-		"env": config.Env("APP_ENV", "production"),
+		"env": config.Env("app.env", "production"),
 
 		// 是否进入调试模式
-		"debug": config.Env("APP_DEBUG", false),
+		"debug": config.Env("app.debug", false),
 
 		// App url
-		"url": config.Env("APP_URL", "http://localhost"),
+		"url": config.Env("app.url", "http://localhost"),
 
 		// 应用服务端口
-		"port": config.Env("APP_PORT", "8080"),
+		"port": config.Env("app.port", "8080"),
 
 		// APP密钥
-		"key": config.Env("APP_KEY", "123456"),
+		"key": config.Env("app.secret", "123456"),
 	})
 }
