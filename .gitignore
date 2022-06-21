@@ -1,6 +1,5 @@
 .env
 !.gitignore
-app.ini
 main
 .idea
 .DS_Store
