@@ -10,8 +10,10 @@
 package bootstrap
 
 import (
+	"fast-go/app/handler/http_response"
 	"fast-go/app/http/middleware"
 	rw "fast-go/routes/web"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,6 +23,10 @@ func SetupRoute() *gin.Engine {
 
 	// 资源文件路由
 	router.Static("/resources", "./resources")
+	// 找不到路由时的返回
+	router.NoRoute(func(ctx *gin.Context) {
+		http_response.QueryVoid(ctx, "请求路径不存在")
+	})
 	// Web 路由组注册
 	rw.RegisterWebRoutes(router)
 
