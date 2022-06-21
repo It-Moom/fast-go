@@ -4,18 +4,18 @@
  * @Author: Casso-Wong
  * @Date: 2021-10-04 19:39:17
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-04 21:08:56
+ * @Last Modified time: 2021-10-05 14:05:53
  */
 package tests
 
 import (
-	"fast-go/pkg/utils/date_util"
+	"fast-go/pkg/utils/date"
 	"testing"
 	"time"
 )
 
 func TestLocalNow(t *testing.T) {
-	res := date_util.FulltimeNow()
+	res := date.FulltimeNow()
 	if res == "" {
 		t.Error(res)
 	}
@@ -23,7 +23,7 @@ func TestLocalNow(t *testing.T) {
 }
 
 func TestFulltimeSlantNow(t *testing.T) {
-	res := date_util.FulltimeSlantNow()
+	res := date.FulltimeSlantNow()
 	if res == "" {
 		t.Error(res)
 	}
@@ -31,7 +31,7 @@ func TestFulltimeSlantNow(t *testing.T) {
 }
 
 func TestYmdNow(t *testing.T) {
-	res := date_util.YmdNow()
+	res := date.YmdNow()
 	if res == "" {
 		t.Error(res)
 	}
@@ -39,7 +39,7 @@ func TestYmdNow(t *testing.T) {
 }
 
 func TestHmsNow(t *testing.T) {
-	res := date_util.HmsNow()
+	res := date.HmsNow()
 	if res == "" {
 		t.Error(res)
 	}
@@ -47,13 +47,13 @@ func TestHmsNow(t *testing.T) {
 }
 
 func TestStartToday(t *testing.T) {
-	res := date_util.StartToday()
+	res := date.StartToday()
 	t.Log(res)
 }
 
 func TestParseTime(t *testing.T) {
 	source := "2021-10-04 13:50:30"
-	res, err := date_util.ParseTime(source)
+	res, err := date.ParseTime(source)
 	if err != nil {
 		t.Error(err)
 	}
@@ -62,7 +62,7 @@ func TestParseTime(t *testing.T) {
 
 func TestParseTimeStamp(t *testing.T) {
 	source := "2021-10-04 13:50:30"
-	res, err := date_util.ParseTimeStamp(source)
+	res, err := date.ParseTimeStamp(source)
 	if err != nil {
 		t.Error(err)
 	}
@@ -73,7 +73,7 @@ func TestGetDurationByString(t *testing.T) {
 	start := "2021-10-04 13:50:30"
 	end := "2021-10-04 13:50:35"
 	target := 5
-	res, err := date_util.GetDurationByString(start, end)
+	res, err := date.GetDurationByString(start, end)
 	if err != nil || res != int64(target) {
 		t.Error(err)
 	}
@@ -84,7 +84,7 @@ func TestGetDurationByTime(t *testing.T) {
 	t1 := time.Now()
 	t2 := t1.Add(time.Second * 5)
 	target := 5
-	res, err := date_util.GetDurationByTime(t1, t2)
+	res, err := date.GetDurationByTime(t1, t2)
 	if err != nil || res != int64(target) {
 		t.Error(err)
 	}

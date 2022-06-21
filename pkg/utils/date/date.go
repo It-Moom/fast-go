@@ -1,12 +1,12 @@
 /*
- * @PackageName: date_util
+ * @PackageName: date
  * @Description: 时间日期工具
  * @Author: Casso-Wong
  * @Date: 2021-10-04 19:31:04
  * @Last Modified by: Casso-Wong
- * @Last Modified time: 2021-10-04 21:08:40
+ * @Last Modified time: 2021-10-05 14:05:10
  */
-package date_util
+package date
 
 import (
 	"errors"
