@@ -145,6 +145,15 @@ func responseResult(ctx *gin.Context, resCode int, resMsg string, args ...interf
 				Message: args[0].(string),
 				Errors:  args[1].([]string),
 			})
+		} else {
+			// 如果第一个参数类型为[]string，则直接返回message,errors
+			ctx.JSON(http.StatusOK, responseBody{
+				Code:    resCode,
+				Success: false,
+				Data:    nil,
+				Message: args[1].(string),
+				Errors:  args[0].([]string),
+			})
 		}
 
 	// 返回默认消息
