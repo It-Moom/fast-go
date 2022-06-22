@@ -56,7 +56,7 @@
 | [lumberjack](https://github.com/natefinch/lumberjack) | 日志滚动方案       |
 | [go-redis](https://github.com/go-redis/redis)         | Redis操作      |
 | [limiter](https://github.com/ulule/limiter)           | 限流器          |
-
+| [ansi](https://github.com/mgutz/ansi)                 | 终端高亮         |
 ## 环境说明
 - Go 
   - 版本: 1.18.x
