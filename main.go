@@ -11,6 +11,7 @@ package main
 
 import (
 	"fast-go/app/cmd"
+	"fast-go/app/cmd/make"
 	"fast-go/bootstrap"
 	btsConfig "fast-go/config"
 	"fast-go/pkg/config"
@@ -57,6 +58,7 @@ func main() {
 		cmd.CmdServe,
 		cmd.CmdScret,
 		cmd.CmdPlay,
+		make.CmdMake,
 	)
 
 	// 配置默认运行 Web 服务
