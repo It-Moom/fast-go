@@ -1,6 +1,6 @@
 /*
  * @PackageName: bootstrap
- * @Description: 数据库初始化
+ * @Description: 数据库引导文件
  * @Author: gabbymrh
  * @Date: 2022-06-22 17:26:53
  * @Last Modified by: gabbymrh

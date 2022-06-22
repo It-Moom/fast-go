@@ -1,6 +1,6 @@
 /*
  * @PackageName: database
- * @Description: 数据库内核文件
+ * @Description: 数据库处理
  * @Author: gabbymrh
  * @Date: 2022-06-22 17:26:53
  * @Last Modified by: gabbymrh

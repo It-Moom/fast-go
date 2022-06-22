@@ -35,6 +35,9 @@ func main() {
 
 	// 初始化 SQL
 	bootstrap.SetupDB()
+	// 初始化 Redis
+	bootstrap.SetupRedis()
+
 	// 初始化服务及路由
 	bootstrap.SetupRoute().Run(":" + pc.GetString("app.port"))
 }

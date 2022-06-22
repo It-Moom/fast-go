@@ -1,6 +1,6 @@
 /*
  * @PackageName: config
- * @Description: 内核配置
+ * @Description: 配置文件处理
  * @Author: gabbymrh
  * @Date: 2021-10-02 17:26:53
  * @Last Modified by: gabbymrh

@@ -1,6 +1,6 @@
 /*
  * @PackageName: logger
- * @Description: 日志记录
+ * @Description: 日志处理文件
  * @Author: gabbymrh
  * @Date: 2021-10-02 17:28:58
  * @Last Modified by: gabbymrh

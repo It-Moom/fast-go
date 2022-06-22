@@ -1,6 +1,6 @@
 /*
  * @PackageName: app
- * @Description: app 应用
+ * @Description: app 环境处理
  * @Author: gabbymrh
  * @Date: 2022-06-22 17:26:53
  * @Last Modified by: gabbymrh

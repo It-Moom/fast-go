@@ -1,6 +1,6 @@
 /*
  * @PackageName: bootstrap
- * @Description: 日志启动文件
+ * @Description: 日志引导文件
  * @Author: gabbymrh
  * @Date: 2022-06-22 17:26:53
  * @Last Modified by: gabbymrh
