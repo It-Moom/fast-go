@@ -1,0 +1,28 @@
+/*
+ * @PackageName: cmd
+ * @Description: 调试命令
+ * @Author: gabbymrh
+ * @Date: 2022-06-22 23:39:21
+ * @LastModifiedBy: gabbymrh
+ * @LastModifiedAt: 2022-06-22 23:39:21
+ */
+
+package cmd
+
+import (
+	"github.com/spf13/cobra"
+)
+
+var CmdPlay = &cobra.Command{
+	Use:   "play",
+	Short: "Likes the Go Playground, but running at our application context",
+	Run:   runPlay,
+}
+
+// 调试完成后请记得清除测试代码
+func runPlay(cmd *cobra.Command, args []string) {
+	//// 存进去 redis 中
+	//redis.Redis.Set("hello", "hi from redis", 100*time.Second)
+	//// 从 redis 里取出
+	//console.Success(redis.Redis.Get("hello"))
+}

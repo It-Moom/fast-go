@@ -56,6 +56,7 @@ func main() {
 	rootCmd.AddCommand(
 		cmd.CmdServe,
 		cmd.CmdScret,
+		cmd.CmdPlay,
 	)
 
 	// 配置默认运行 Web 服务
