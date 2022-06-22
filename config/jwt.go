@@ -12,12 +12,13 @@ package config
 import "fast-go/pkg/config"
 
 func init() {
-	config.Add("jwt", config.StrMap{
+	config.Add("jwt", func() map[string]interface{} {
+		return map[string]interface{}{
+			// jwt 密钥
+			"secret": config.Env("jwt.secret", "fast-go"),
 
-		// jwt 密钥
-		"secret": config.Env("jwt.secret", "fast-go"),
-
-		// jwt 有效时间:单位秒,默认1小时过期
-		"ttl": config.Env("jwt.ttl", 3600),
+			// jwt 有效时间:单位秒,默认1小时过期
+			"ttl": config.Env("jwt.ttl", 3600),
+		}
 	})
 }

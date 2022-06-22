@@ -10,7 +10,6 @@
 package secure
 
 import (
-	"fast-go/pkg/logger"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -19,7 +18,7 @@ func GeneratePassword(str string) string {
 	// 使用Bcrypt加密密码
 	password, err := bcrypt.GenerateFromPassword([]byte(str), bcrypt.DefaultCost)
 	if err != nil {
-		logger.LogError(err)
+		panic(err)
 	}
 	// 返回加密字符串
 	return string(password)

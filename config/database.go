@@ -13,21 +13,31 @@ import "fast-go/pkg/config"
 
 func init() {
 
-	config.Add("database", config.StrMap{
-		"mysql": map[string]interface{}{
+	config.Add("database", func() map[string]interface{} {
+		return map[string]interface{}{
+			// 连接库
+			"connection": config.Env("database.driver", "mysql"),
 
-			// 数据库连接信息
-			"host":     config.Env("database.host", "127.0.0.1"),
-			"port":     config.Env("database.port", "3306"),
-			"database": config.Env("database.database", "fast_go"),
-			"username": config.Env("database.username", ""),
-			"password": config.Env("database.password", ""),
-			"charset":  "utf8mb4",
+			// MySQl
+			"mysql": map[string]interface{}{
+				// 数据库连接信息
+				"host":     config.Env("database.host", "127.0.0.1"),
+				"port":     config.Env("database.port", "3306"),
+				"database": config.Env("database.database", "fast_go"),
+				"username": config.Env("database.username", ""),
+				"password": config.Env("database.password", ""),
+				"charset":  "utf8mb4",
 
-			// 连接池配置
-			"max_idle_connections": config.Env("database.max-idle-connections", 100),
-			"max_open_connections": config.Env("database.max-open-connections", 25),
-			"max_life_seconds":     config.Env("databse.max-life-seconds", 5*60),
-		},
+				// 连接池配置
+				"max_idle_connections": config.Env("database.max-idle-connections", 100),
+				"max_open_connections": config.Env("database.max-open-connections", 25),
+				"max_life_seconds":     config.Env("databse.max-life-seconds", 5*60),
+			},
+
+			// SQLite
+			"sqlite": map[string]interface{}{
+				"database": config.Env("DB_SQL_FILE", "database/database.db"),
+			},
+		}
 	})
 }

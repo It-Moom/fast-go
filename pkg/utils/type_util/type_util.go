@@ -10,7 +10,6 @@
 package type_util
 
 import (
-	"fast-go/pkg/logger"
 	"strconv"
 )
 
@@ -23,7 +22,7 @@ func Int64ToString(num int64) string {
 func StringToInt(str string) int {
 	i, err := strconv.Atoi(str)
 	if err != nil {
-		logger.LogError(err)
+		panic(err)
 	}
 	return i
 }

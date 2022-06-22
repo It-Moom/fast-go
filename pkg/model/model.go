@@ -11,7 +11,6 @@ package model
 
 import (
 	"fast-go/pkg/config"
-	"fast-go/pkg/logger"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -61,7 +60,9 @@ func ConnectDB() *gorm.DB {
 		NamingStrategy: schema.NamingStrategy{SingularTable: true},
 	})
 
-	logger.LogError(err)
+	if err != nil {
+		panic(err)
+	}
 
 	return DB
 }

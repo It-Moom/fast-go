@@ -31,7 +31,16 @@ func SetupRoute() *gin.Engine {
 	rw.RegisterWebRoutes(router)
 
 	// 全局中间件
-	// 跨域处理中间件
-	router.Use(middleware.Cors())
+	registerGlobalMiddleWare(router)
+
 	return router
+}
+
+// registerGlobalMiddleware 注册全局中间件
+func registerGlobalMiddleWare(router *gin.Engine) {
+	router.Use(
+		middleware.Logger(),
+		middleware.Cors(),
+		middleware.Recovery(),
+	)
 }
