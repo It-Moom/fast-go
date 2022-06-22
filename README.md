@@ -55,6 +55,7 @@
 | [zap](https://github.com/uber-go/zap)                 | 日志处理扩展       |
 | [lumberjack](https://github.com/natefinch/lumberjack) | 日志滚动方案       |
 | [go-redis](https://github.com/go-redis/redis)         | Redis操作      |
+| [limiter](https://github.com/ulule/limiter)           | 限流器          |
 
 ## 环境说明
 - Go 
