@@ -58,6 +58,8 @@
 | [limiter](https://github.com/ulule/limiter)           | 限流器          |
 | [ansi](https://github.com/mgutz/ansi)                 | 终端高亮         |
 | [cobra](https://github.com/spf13/cobra)               | 命令行处理        |
+| [strcase](https://github.com/iancoleman/strcase)      | 处理大小写        |
+| [go-pluralize](https://github.com/gertd/go-pluralize) | 处理英文单复数      |
 ## 环境说明
 - Go 
   - 版本: 1.18.x
