@@ -30,7 +30,13 @@ func init() {
 			"port": config.Env("app.port", "8080"),
 
 			// APP密钥
-			"key": config.Env("app.secret", "123456"),
+			"secret": config.Env("app.secret", "123456"),
+
+			// 设置时区，JWT 里会使用，日志记录里也会使用到
+			"timezone": config.Env("app.timezone", "Asia/Shanghai"),
+
+			// API 域名，未设置的话所有 API URL 加 api 前缀，如 http://domain.com/api/v1/users
+			"api_domain": config.Env("app.api-url", ""),
 		}
 	})
 }
