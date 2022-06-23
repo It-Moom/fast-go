@@ -68,6 +68,7 @@ func init() {
 		CmdMakeEntity,
 		CmdMakeAPIController,
 		CmdMakeRequest,
+		CmdMakeMigration,
 	)
 }
 

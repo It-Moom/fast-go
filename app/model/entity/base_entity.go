@@ -21,3 +21,9 @@ type BaseEntity struct {
 	UpdatedAt time.Time      `gorm:"autoUpdateTime;comment:更新时间"`
 	DeletedAt gorm.DeletedAt `gorm:"index;comment:删除时间"`
 }
+
+// CommonTimestampsField 时间戳
+type CommonTimestampsField struct {
+	CreatedAt time.Time `gorm:"column:created_at;index;" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
+}

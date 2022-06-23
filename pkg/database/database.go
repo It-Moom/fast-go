@@ -12,6 +12,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"gorm.io/gorm/schema"
 
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
@@ -28,6 +29,10 @@ func Connect(dbConfig gorm.Dialector, _logger gormlogger.Interface) {
 	var err error
 	DB, err = gorm.Open(dbConfig, &gorm.Config{
 		Logger: _logger,
+		// 关闭表名复数形式
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
 	})
 	// 处理错误
 	if err != nil {
