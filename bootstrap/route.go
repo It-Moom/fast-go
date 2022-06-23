@@ -40,5 +40,6 @@ func registerGlobalMiddleWare(router *gin.Engine) {
 		middleware.Logger(),
 		middleware.Cors(),
 		middleware.Recovery(),
+		middleware.ForceUA(),
 	)
 }
