@@ -53,7 +53,8 @@ func main() {
 		},
 	}
 
-	// 注册子命令
+	// 注册子命令,make子命令位于app/cmd/make目录下单独注册
+	// 此处通过make.CmdMake注册make子命令
 	rootCmd.AddCommand(
 		cmd.CmdServe,
 		cmd.CmdScret,

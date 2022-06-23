@@ -20,7 +20,7 @@ import (
 	"strings"
 )
 
-// Model 参数解释
+// Entity 参数解释
 // 单个词，用户命令传参，以 User 模型为例：
 //     - user
 //  - User
@@ -42,7 +42,7 @@ import (
 //     "VariableName": "topicComment",
 //     "PackageName": "topic_comment"
 // }
-type Model struct {
+type Entity struct {
 	TableName    string
 	StructName   string
 	VariableName string
@@ -65,22 +65,23 @@ func init() {
 	// 注册 make 的子命令
 	CmdMake.AddCommand(
 		CmdMakeCMD,
+		CmdMakeEntity,
 	)
 }
 
-// makeModelFromString 格式化用户输入的内容
-func makeModelFromString(name string) Model {
-	model := Model{}
-	model.StructName = str.Singular(strcase.ToCamel(name))
-	model.TableName = str.Snake(model.StructName)
-	model.VariableName = str.LowerCamel(model.StructName)
-	model.PackageName = str.Snake(model.StructName)
-	return model
+// makeEntityFromString 格式化用户输入的内容
+func makeEntityFromString(name string) Entity {
+	entity := Entity{}
+	entity.StructName = str.Singular(strcase.ToCamel(name))
+	entity.TableName = str.Snake(entity.StructName)
+	entity.VariableName = str.LowerCamel(entity.StructName)
+	entity.PackageName = str.Snake(entity.StructName)
+	return entity
 }
 
 // createFileFromStub 读取 stub 文件并进行变量替换
 // 最后一个选项可选，如若传参，应传 map[string]string 类型，作为附加的变量搜索替换
-func createFileFromStub(filePath string, stubName string, model Model, variables ...interface{}) {
+func createFileFromStub(filePath string, stubName string, entity Entity, variables ...interface{}) {
 
 	// 实现最后一个参数可选
 	replaces := make(map[string]string)
@@ -94,25 +95,25 @@ func createFileFromStub(filePath string, stubName string, model Model, variables
 	}
 
 	// 读取 stub 模板文件
-	modelData, err := stubsFS.ReadFile("stubs/" + stubName + ".stub")
+	entityData, err := stubsFS.ReadFile("stubs/" + stubName + ".stub")
 	if err != nil {
 		console.Exit(err.Error())
 	}
-	modelStub := string(modelData)
+	entityStub := string(entityData)
 
 	// 添加默认的替换变量
-	replaces["{{VariableName}}"] = model.VariableName
-	replaces["{{StructName}}"] = model.StructName
-	replaces["{{PackageName}}"] = model.PackageName
-	replaces["{{TableName}}"] = model.TableName
+	replaces["{{VariableName}}"] = entity.VariableName
+	replaces["{{StructName}}"] = entity.StructName
+	replaces["{{PackageName}}"] = entity.PackageName
+	replaces["{{TableName}}"] = entity.TableName
 
 	// 对模板内容做变量替换
 	for search, replace := range replaces {
-		modelStub = strings.ReplaceAll(modelStub, search, replace)
+		entityStub = strings.ReplaceAll(entityStub, search, replace)
 	}
 
 	// 存储到目标文件中
-	err = file.Put([]byte(modelStub), filePath)
+	err = file.Put([]byte(entityStub), filePath)
 	if err != nil {
 		console.Exit(err.Error())
 	}
