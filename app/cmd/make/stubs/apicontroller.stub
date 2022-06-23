@@ -1,0 +1,100 @@
+package v1
+
+import (
+    "fast-go/app/model/entity/{{PackageName}}"
+    "fast-go/app/policies"
+    "fast-go/app/http/request"
+    "fast-go/app/handler/http_response"
+
+    "github.com/gin-gonic/gin"
+)
+
+type {{StructName}}Controller struct {
+    BaseAPIController
+}
+
+func (ctrl *{{StructName}}Controller) Index(c *gin.Context) {
+    {{VariableNamePlural}} := {{PackageName}}.All()
+    http_response.RequestSuccess(c, {{VariableNamePlural}})
+}
+
+func (ctrl *{{StructName}}Controller) Show(c *gin.Context) {
+    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+    if {{VariableName}}Entity.ID == 0 {
+        http_response.QueryVoid(c, "{{StructName}}不存在")
+        return
+    }
+    http_response.RequestSuccess(c, {{VariableName}}Entity)
+}
+
+func (ctrl *{{StructName}}Controller) Store(c *gin.Context) {
+
+    request := requests.{{StructName}}Request{}
+    if ok := requests.Validate(c, &request, requests.{{StructName}}Save); !ok {
+        return
+    }
+
+    {{VariableName}}Entity := {{PackageName}}.{{StructName}}{
+        FieldName:      request.FieldName,
+    }
+    {{VariableName}}Entity.Create()
+    if {{VariableName}}Entity.ID > 0 {
+        http_response.RequestSuccess(c, {{VariableName}}Entity)
+    } else {
+        http_response.RequestError(c, "创建{{StructName}}失败")
+    }
+}
+
+func (ctrl *{{StructName}}Controller) Update(c *gin.Context) {
+
+    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+    if {{VariableName}}Entity.ID == 0 {
+        http_response.QueryVoid(c, "{{StructName}}不存在")
+        return
+    }
+
+    if ok := policies.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
+        http_response.PermissionDeny(c, "无权修改{{StructName}}")
+        return
+    }
+
+    request := requests.{{StructName}}Request{}
+    bindOk, errs := requests.Validate(c, &request, requests.{{StructName}}Save)
+    if !bindOk {
+        return
+    }
+    if len(errs) > 0 {
+        http_response.ParamError(c, errs)
+        return
+    }
+
+    {{VariableName}}Entity.FieldName = request.FieldName
+    rowsAffected := {{VariableName}}Entity.Save()
+    if rowsAffected > 0 {
+        http_response.RequestSuccess(c, {{VariableName}}Entity)
+    } else {
+        http_response.RequestError(c, "修改{{StructName}}失败")
+
+	}
+}
+
+func (ctrl *{{StructName}}Controller) Delete(c *gin.Context) {
+
+    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+    if {{VariableName}}Entity.ID == 0 {
+		http_response.QueryVoid(c, "{{StructName}}不存在")
+        return
+    }
+
+    if ok := policies.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
+        http_response.PermissionDeny(c, "无权修改{{StructName}}")
+        return
+    }
+
+    rowsAffected := {{VariableName}}Entity.Delete()
+    if rowsAffected > 0 {
+        http_response.RequestSuccess(c, "删除{{StructName}}成功")
+        return
+    }
+    http_response.RequestError(c, "删除{{StructName}}失败")
+}
