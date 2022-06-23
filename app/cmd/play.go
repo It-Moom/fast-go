@@ -1,6 +1,6 @@
 /*
  * @PackageName: cmd
- * @Description: 调试命令
+ * @Description: play 调试命令
  * @Author: gabbymrh
  * @Date: 2022-06-22 23:39:21
  * @LastModifiedBy: gabbymrh

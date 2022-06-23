@@ -1,6 +1,6 @@
 /*
  * @PackageName: cmd
- * @Description: 命令行
+ * @Description: cmd 命令行
  * @Author: gabbymrh
  * @Date: 2022-06-22 23:14:28
  * @LastModifiedBy: gabbymrh

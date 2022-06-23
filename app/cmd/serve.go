@@ -1,6 +1,6 @@
 /*
  * @PackageName: cmd
- * @Description: 服务命令行
+ * @Description: serve 服务命令
  * @Author: gabbymrh
  * @Date: 2022-06-22 23:05:19
  * @LastModifiedBy: gabbymrh

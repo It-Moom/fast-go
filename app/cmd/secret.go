@@ -1,6 +1,6 @@
 /*
  * @PackageName: cmd
- * @Description: app secret 命令
+ * @Description: secret 命令
  * @Author: gabbymrh
  * @Date: 2022-06-22 23:20:13
  * @LastModifiedBy: gabbymrh

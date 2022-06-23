@@ -1,6 +1,6 @@
 /*
  * @PackageName: make
- * @Description: make 命令
+ * @Description: make cmd 命令
  * @Author: gabbymrh
  * @Date: 2022-06-22 23:54:14
  * @LastModifiedBy: gabbymrh
