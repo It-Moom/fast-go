@@ -1,3 +1,4 @@
+# app配置
 app:
   name: FastGo
   env: local
@@ -6,10 +7,12 @@ app:
   url: http://localhost:8080
   port: 8080
 
+# 日志配置
 log:
   type: daily
   level: debug
 
+# 数据库配置
 database:
   driver: mysql
   host: 127.0.0.1
@@ -18,15 +21,18 @@ database:
   username: root
   password: root
 
+# redis配置
 redis:
   host: 127.0.0.1
   port: 6379
   password:
 
+# 会话配置
 session:
   driver: cookie
   name: fast-go-session
 
+# jwt配置
 jwt:
   secret: fast-go
   ttl: 3600
