@@ -6,36 +6,54 @@
 
 ```
 .
-├── README.md                   框架介绍
 ├── app                         应用目录
+│   ├── cmd                     命令目录
 │   ├── common                  公共文件库
 │   ├── constant                常量库
 │   ├── dao                     数据访问库
 │   ├── handler                 助手文件库
 │   ├── http                    Http访问库
+│   │ ├── controller            控制器目录
+│   │ ├── middleware            中间件目录
+│   │ └── request               请求验证器目录
 │   ├── model                   模型文件库
+│   │ ├── dto                   数据传输对象库
+│   │ ├── entity                实体类库
+│   │ └── vo                    回调对象库
 │   └── service                 接口服务库
-├── bootstrap                   启动文件库
-│   └── README.md
+├── bootstrap                   引导文件库
 ├── config                      配置文件库
-│   ├── README.md
-│   ├── conf                    配置文件
-│   └── conf_property           配置文件属性
 ├── database                    迁移文件及工厂文件库
-│   └── README.md
-├── go.mod
-├── go.sum
+│   ├── factory                 工厂文件库
+│   ├── migrations              迁移文件库
+│   └── seeder                  种子文件库
 ├── main.go                     应用入口文件
 ├── pkg                         内核代码库
-│   └──  README.md
+│   ├── app                     应用代码库
+│   ├── auth                    认证代码库
+│   ├── cache                   缓存代码库
+│   ├── config                  配置代码库
+│   ├── console                 控制台代码库
+│   ├── database                数据库操作代码库
+│   ├── file                    文件操作代码库
+│   ├── heplers                 助手代码库
+│   ├── limiter                 限流代码库
+│   ├── logger                  日志代码库
+│   ├── migrate                 迁移操作代码库
+│   ├── paginator               分页操作代码库
+│   ├── redis                   Redis操作代码库
+│   ├── seed                    种子操作代码库
+│   ├── str                     字符串操作代码库
+│   └── utils                   工具代码库
+├── public                       公开目录
 ├── resources                   资源文件库
-│   └── README.md
 ├── routes                      路由文件库
-│   └── README.md
+│   ├── api                     API路由文件库
+│   └── web                     Web路由文件库
 ├── storage                     文件资料库
-│   └── README.md
-└── tests                       单元测试库
-    └──  README.md
+│   └── logs                    日志文件库
+├── tests                       单元测试库
+└── tmp                         编译文件库    
 
 ```
 
@@ -62,19 +80,23 @@
 | [go-pluralize](https://github.com/gertd/go-pluralize)      | 处理英文单复数      |
 | [govalidator](https://github.com/thedevsaddam/govalidator) | 参数验证器        |
 | [faker](https://github.com/bxcodec/faker)                  | 假数据填充        |
+
 ## 环境说明
-- Go 
-  - 版本: 1.18.x
+
+- Go
+    - 版本: 1.18.x
 - MySQL
-  - 版本: 5.7.x 
+    - 版本: 5.7.x
 - Redis
-  - 版本: 6.x
+    - 版本: 6.x
 
 ## 启动说明
+
 - 1.首先拉取项目到本地，然后进入项目目录，执行如下命令：` cp .yml.example .yml`
-- 2.配置项目下的 `.yml` 文件,填写项目数据库信息，如果没有数据库信息，请先创建数据库，然后在 `.yml` 文件中填写数据库信息
-- 3.如果本机环境有安装 air，则进入项目根目录，可以通过如下命令进行热重载运行项目：` air run` 或者 ` air run -d`(常驻进程，开发时不建议)
-- 4.如果本机环境没有安装 air，则进入项目根目录，可以通过如下命令运行项目：` go run main.go`
+- 2.进入项目根目录执行：`go mod tidy`，整理依赖
+- 3.配置项目下的 `.yml` 文件,填写项目数据库信息，如果没有数据库信息，请先创建数据库，然后在 `.yml` 文件中填写数据库信息
+- 4.如果本机环境有安装 air，则进入项目根目录，可以通过如下命令进行热重载运行项目：` air run` 或者 ` air run -d`(常驻进程，开发时不建议)
+- 5.如果本机环境没有安装 air，则进入项目根目录，可以通过如下命令运行项目：` go run main.go`
 
 ## Commit提交规范
 
