@@ -26,6 +26,7 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/thedevsaddam/govalidator v1.9.10 // indirect
 )
 
 require (

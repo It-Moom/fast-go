@@ -41,25 +41,26 @@
 
 ## 所用扩展包
 
-| 包/扩展                                                  | 作用说明         |
-|-------------------------------------------------------|--------------|
-| [gin](https://github.com/gin-gonic/gin)               | 基础Web框架      |
-| [air](https://github.com/cosmtrek/air)                | 热重载          |
-| [cast](https://github.com/spf13/cast)                 | 类型转换         |
-| [testify](https://github.com/stretchr/testify)        | 单元测试         |
-| [gorm](https://github.com/go-gorm/gorm)               | ORM框架        |
-| [gorm-mysql](https://github.com/go-gorm/mysql)        | GORM-MySQL依赖 |
-| [viper](https://github.com/spf13/viper)               | 配置文件处理       |
-| [jwt](https://github.com/dgrijalva/jwt-go)            | JWT          |
-| [go.uuid](https://github.com/satori/go.uuid)          | UUID生成器      |
-| [zap](https://github.com/uber-go/zap)                 | 日志处理扩展       |
-| [lumberjack](https://github.com/natefinch/lumberjack) | 日志滚动方案       |
-| [go-redis](https://github.com/go-redis/redis)         | Redis操作      |
-| [limiter](https://github.com/ulule/limiter)           | 限流器          |
-| [ansi](https://github.com/mgutz/ansi)                 | 终端高亮         |
-| [cobra](https://github.com/spf13/cobra)               | 命令行处理        |
-| [strcase](https://github.com/iancoleman/strcase)      | 处理大小写        |
-| [go-pluralize](https://github.com/gertd/go-pluralize) | 处理英文单复数      |
+| 包/扩展                                                       | 作用说明         |
+|------------------------------------------------------------|--------------|
+| [gin](https://github.com/gin-gonic/gin)                    | 基础Web框架      |
+| [air](https://github.com/cosmtrek/air)                     | 热重载          |
+| [cast](https://github.com/spf13/cast)                      | 类型转换         |
+| [testify](https://github.com/stretchr/testify)             | 单元测试         |
+| [gorm](https://github.com/go-gorm/gorm)                    | ORM框架        |
+| [gorm-mysql](https://github.com/go-gorm/mysql)             | GORM-MySQL依赖 |
+| [viper](https://github.com/spf13/viper)                    | 配置文件处理       |
+| [jwt](https://github.com/dgrijalva/jwt-go)                 | JWT          |
+| [go.uuid](https://github.com/satori/go.uuid)               | UUID生成器      |
+| [zap](https://github.com/uber-go/zap)                      | 日志处理扩展       |
+| [lumberjack](https://github.com/natefinch/lumberjack)      | 日志滚动方案       |
+| [go-redis](https://github.com/go-redis/redis)              | Redis操作      |
+| [limiter](https://github.com/ulule/limiter)                | 限流器          |
+| [ansi](https://github.com/mgutz/ansi)                      | 终端高亮         |
+| [cobra](https://github.com/spf13/cobra)                    | 命令行处理        |
+| [strcase](https://github.com/iancoleman/strcase)           | 处理大小写        |
+| [go-pluralize](https://github.com/gertd/go-pluralize)      | 处理英文单复数      |
+| [govalidator](https://github.com/thedevsaddam/govalidator) | 参数验证器        |
 ## 环境说明
 - Go 
   - 版本: 1.18.x
