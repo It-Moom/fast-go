@@ -16,13 +16,13 @@ import (
 
 // 测试生成密码
 func TestGeneratePassword(t *testing.T) {
-	password := secure.GeneratePassword("123456")
+	password := secure.BcryptHash("123456")
 	t.Log(password) // 如:$2a$10$caUw3B4E1JmevafFax6UyuI7OqRW4AJlWxlhvCptlTAG0fvqLDS6m
 }
 
 // 测试校验密码
 func TestVerifyPassword(t *testing.T) {
 	hashedPassword := "$2a$10$caUw3B4E1JmevafFax6UyuI7OqRW4AJlWxlhvCptlTAG0fvqLDS6m"
-	passwordVerify := secure.VerifyPassword("123456", hashedPassword)
+	passwordVerify := secure.BcryptCheck("123456", hashedPassword)
 	t.Log(passwordVerify) // 如：true
 }
