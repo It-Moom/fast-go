@@ -24,9 +24,11 @@ func init() {
 			// 开发时推荐使用 "debug" 或者 "info" ，生产环境下使用 "error"
 			"level": config.Env("log.level", "debug"),
 
-			// 日志的类型，可选：
+			// 日志的记录类型，可选：
 			// "single" 独立的文件
 			// "daily" 按照日期每日一个
+			// "monthly" 按照月份每月一个
+			// "yearly" 按照年份每年一个
 			"type": config.Env("log.type", "single"),
 
 			/* ------------------ 滚动日志配置 ------------------ */

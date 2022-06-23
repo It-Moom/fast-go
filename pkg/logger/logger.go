@@ -150,7 +150,7 @@ func DebugJSON(moduleName, name string, value interface{}) {
 	Logger.Debug(moduleName, zap.String(name, jsonString(value)))
 }
 
-// ErrorJSON 记录对象类型的 error 日志，使用 json.Marshal 进行编码。调用示例：
+// InfoJSON 记录对象类型的 error 日志，使用 json.Marshal 进行编码。调用示例：
 //         logger.ErrorJSON("Auth", "读取登录用户", auth.CurrentUser())
 func InfoJSON(moduleName, name string, value interface{}) {
 	Logger.Info(moduleName, zap.String(name, jsonString(value)))
@@ -225,6 +225,16 @@ func getLogWriter(filename string, maxSize, maxBackup, maxAge int, compress bool
 	// 如果配置了按照日期记录日志文件
 	if logType == "daily" {
 		logname := time.Now().Format("2006-01-02.log")
+		filename = strings.ReplaceAll(filename, "logs.log", logname)
+	}
+	// 如果配置了按照月份记录日志文件
+	if logType == "monthly" {
+		logname := time.Now().Format("2006-01.log")
+		filename = strings.ReplaceAll(filename, "logs.log", logname)
+	}
+	// 如果配置了按照年份记录日志文件
+	if logType == "yearly" {
+		logname := time.Now().Format("2006.log")
 		filename = strings.ReplaceAll(filename, "logs.log", logname)
 	}
 
