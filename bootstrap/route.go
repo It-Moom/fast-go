@@ -12,6 +12,7 @@ package bootstrap
 import (
 	"fast-go/app/handler/http_response"
 	"fast-go/app/http/middleware"
+	"fast-go/routes/api"
 	"fast-go/routes/web"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +29,8 @@ func SetupRoute(router *gin.Engine) {
 	})
 	// Web 路由组注册
 	web.RegisterWebRoutes(router)
+	// Api 路由组注册
+	api.RegisterApiRoutes(router)
 
 	// 全局中间件
 	registerGlobalMiddleWare(router)
