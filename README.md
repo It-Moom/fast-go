@@ -45,7 +45,7 @@
 │   ├── seed                    种子操作代码库
 │   ├── str                     字符串操作代码库
 │   └── utils                   工具代码库
-├── public                       公开目录
+├── public                      公开目录
 ├── resources                   资源文件库
 ├── routes                      路由文件库
 │   ├── api                     API路由文件库
