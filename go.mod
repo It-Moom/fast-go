@@ -3,6 +3,7 @@ module fast-go
 go 1.18
 
 require (
+	github.com/bxcodec/faker/v3 v3.8.0
 	github.com/gertd/go-pluralize v0.2.1
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-redis/redis/v8 v8.11.5
@@ -13,6 +14,7 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
+	github.com/thedevsaddam/govalidator v1.9.10
 	github.com/ulule/limiter/v3 v3.10.0
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/driver/sqlite v1.2.3
@@ -26,7 +28,6 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/thedevsaddam/govalidator v1.9.10 // indirect
 )
 
 require (

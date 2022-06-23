@@ -61,6 +61,7 @@
 | [strcase](https://github.com/iancoleman/strcase)           | 处理大小写        |
 | [go-pluralize](https://github.com/gertd/go-pluralize)      | 处理英文单复数      |
 | [govalidator](https://github.com/thedevsaddam/govalidator) | 参数验证器        |
+| [faker](https://github.com/bxcodec/faker)                  | 假数据填充        |
 ## 环境说明
 - Go 
   - 版本: 1.18.x
