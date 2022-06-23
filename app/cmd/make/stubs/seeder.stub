@@ -1,0 +1,28 @@
+package seeder
+
+import (
+    "fast-go/database/factory"
+    "fast-go/pkg/console"
+    "fast-go/pkg/logger"
+    "fast-go/pkg/seed"
+    "fmt"
+
+    "gorm.io/gorm"
+)
+
+func init() {
+
+    seed.Add("Seed{{StructName}}Table", func(db *gorm.DB) {
+
+        {{VariableName}}  := factory.Make{{StructName}}(10)
+
+        result := db.Table("{{TableName}}").Create(&{{VariableName}})
+
+        if err := result.Error; err != nil {
+            logger.LogIf(err)
+            return
+        }
+
+        console.Success(fmt.Sprintf("Table [%v] %v rows seeded", result.Statement.Table, result.RowsAffected))
+    })
+}
