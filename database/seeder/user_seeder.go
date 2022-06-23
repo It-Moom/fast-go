@@ -25,7 +25,7 @@ func init() {
 	seed.Add("SeedUserTable", func(db *gorm.DB) {
 
 		// 创建 10 个用户对象
-		users := factory.MakeUsers(10)
+		users := factory.MakeUser(10)
 
 		// 批量创建用户（注意批量创建不会调用模型钩子）
 		result := db.Table("user").Create(&users)
