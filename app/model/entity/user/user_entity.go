@@ -11,6 +11,8 @@ package user
 
 import (
 	"fast-go/app/model/entity"
+	"fast-go/pkg/database"
+	"fast-go/pkg/utils/secure"
 	"time"
 )
 
@@ -24,4 +26,19 @@ type User struct {
 	EmailVerifiedAt time.Time `gorm:"type:timestamp;comment:邮箱验证时间"`
 	Status          int       `gorm:"type:int(2);not null;default:1;index;comment:状态:1=>正常,-1=>封禁"`
 	Avatar          string    `gorm:"type:varchar(255);comment:头像"`
+}
+
+// Create 创建用户，通过 User.ID 来判断是否创建成功
+func (userModel *User) Create() {
+	database.DB.Create(&userModel)
+}
+
+// ComparePassword 密码是否正确
+func (userModel *User) ComparePassword(_password string) bool {
+	return secure.BcryptCheck(_password, userModel.Password)
+}
+
+func (userModel *User) Save() (rowsAffected int64) {
+	result := database.DB.Save(&userModel)
+	return result.RowsAffected
 }
