@@ -56,12 +56,12 @@ func SaveUploadFile(c *gin.Context, file *multipart.FileHeader) (string, error) 
 	// 保存文件
 	fileName := randomNameFromUploadFile(file)
 	// public/uploads/2021/12/22/1/nFDacgaWKpWWOmOt.png
-	avatarPath := publicPath + dirName + fileName
-	if err := c.SaveUploadedFile(file, avatarPath); err != nil {
+	filePath := publicPath + dirName + fileName
+	if err := c.SaveUploadedFile(file, filePath); err != nil {
 		return avatar, err
 	}
 
-	return avatarPath, nil
+	return filePath, nil
 }
 
 func randomNameFromUploadFile(file *multipart.FileHeader) string {
