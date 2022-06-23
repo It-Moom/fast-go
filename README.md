@@ -99,6 +99,7 @@
 - 5.如果本机环境有安装 air，则进入项目根目录，可以通过如下命令进行热重载运行项目：` air run` 或者 ` air run -d`(常驻进程，开发时不建议)
 - 6.如果本机环境没有安装 air，则进入项目根目录，可以通过如下命令运行项目：` go run main.go`
 - 7.也可通过框架封装的命令：` go run main.go serve`，运行项目，并启动服务
+- 8.air的安装教程为(使用推荐方式安装)：[air安装教程](https://github.com/cosmtrek/air/blob/master/README-zh_cn.md)
 
 ## 命令说明
 - 1.查看所有命令：项目根目录执行：`go run main.go -h`
