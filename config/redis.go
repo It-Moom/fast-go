@@ -22,6 +22,8 @@ func init() {
 
 			// 业务类存储使用 1 (图片验证码、短信验证码、会话)
 			"database": config.Env("redis.database", 1),
+			// 缓存 cache 包使用 0 ，缓存清空理应当不影响业务
+			"database_cache": config.Env("redis.cache-db", 0),
 		}
 	})
 }
