@@ -1,7 +1,10 @@
 package {{PackageName}}
 
 import (
+    "fast-go/pkg/app"
     "fast-go/pkg/database"
+    "fast-go/pkg/paginator"
+    "github.com/gin-gonic/gin"
 )
 
 func Get(idstr string) ({{VariableName}} {{StructName}}) {
@@ -18,4 +21,15 @@ func IsExist(field, value string) bool {
     var count int64
     database.DB.Model({{StructName}}{}).Where(" = ?", field, value).Count(&count)
     return count > 0
+}
+
+func Paginate(c *gin.Context, perPage int) ({{VariableName}} []{{StructName}}, paginate paginator.Paging) {
+    paginate = paginator.Paginate(
+        c,
+        database.DB.Model({{StructName}}{}),
+        &{{VariableName}},
+        app.URL(database.TableName(&{{StructName}}{})),
+        perPage,
+    )
+    return
 }
