@@ -30,14 +30,14 @@ func IsPhoneExist(phone string) bool {
 	return count > 0
 }
 
-// GetByPhoneNumber 通过手机号来获取用户
-func GetByPhoneNumber(phone string) (userEntity User) {
+// FindByPhoneNumber 通过手机号来获取用户
+func FindByPhoneNumber(phone string) (userEntity User) {
 	database.DB.Where("phone_number = ?", phone).First(&userEntity)
 	return
 }
 
-// GetByMulti 通过 手机号/Email/用户名 来获取用户
-func GetByMulti(loginID string) (userEntity User) {
+// FindByMulti 通过 手机号/Email/用户名 来获取用户
+func FindByMulti(loginID string) (userEntity User) {
 	database.DB.
 		Where("phone_number = ?", loginID).
 		Or("email = ?", loginID).
@@ -46,14 +46,14 @@ func GetByMulti(loginID string) (userEntity User) {
 	return
 }
 
-// Get 通过 ID 获取用户
-func Get(idstr string) (userEntity User) {
+// FindById 通过 ID 获取用户
+func FindById(idstr string) (userEntity User) {
 	database.DB.Where("id", idstr).First(&userEntity)
 	return
 }
 
-// GetByEmail 通过 Email 来获取用户
-func GetByEmail(email string) (userEntity User) {
+// FindByEmail 通过 Email 来获取用户
+func FindByEmail(email string) (userEntity User) {
 	database.DB.Where("email = ?", email).First(&userEntity)
 	return
 }

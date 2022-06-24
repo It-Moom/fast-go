@@ -7,12 +7,12 @@ import (
     "github.com/gin-gonic/gin"
 )
 
-func Get(idstr string) ({{VariableName}} {{StructName}}) {
+func FindById(idstr string) ({{VariableName}} {{StructName}}) {
     database.DB.Where("id", idstr).First(&{{VariableName}})
     return
 }
 
-func GetBy(field, value string) ({{VariableName}} {{StructName}}) {
+func FindBy(field, value string) ({{VariableName}} {{StructName}}) {
     database.DB.Where("? = ?", field, value).First(&{{VariableName}})
     return
 }

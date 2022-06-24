@@ -19,13 +19,13 @@ import (
 // User 用户实体
 type User struct {
 	entity.BaseEntity
-	Name            string    `gorm:"type:varchar(100);index;comment:用户姓名"`
-	Email           string    `gorm:"type:varchar(255);unique;comment:电子邮箱"`
-	PhoneNumber     string    `gorm:"type:varchar(50);unique;comment:手机号"`
-	Password        string    `gorm:"type:varchar(100);comment:密码"`
-	EmailVerifiedAt time.Time `gorm:"type:timestamp;comment:邮箱验证时间"`
-	Status          int       `gorm:"type:int(2);not null;default:1;index;comment:状态:1=>正常,-1=>封禁"`
-	Avatar          string    `gorm:"type:varchar(255);comment:头像"`
+	Name            string    `gorm:"type:varchar(100);index;comment:用户姓名" json:"name,omitempty"`
+	Email           string    `gorm:"type:varchar(255);unique;comment:电子邮箱" json:"email,omitempty"`
+	PhoneNumber     string    `gorm:"type:varchar(50);unique;comment:手机号" json:"phone_number,omitempty"`
+	Password        string    `gorm:"type:varchar(100);comment:密码" json:"-"`
+	EmailVerifiedAt time.Time `gorm:"comment:邮箱验证时间" json:"email_verified_at,omitempty"`
+	Status          int       `gorm:"type:int(2);not null;default:1;index;comment:状态:1=>正常,-1=>封禁" json:"status,omitempty"`
+	Avatar          string    `gorm:"type:varchar(255);comment:头像" json:"avatar,omitempty"`
 	entity.CommonTimestampsField
 }
 

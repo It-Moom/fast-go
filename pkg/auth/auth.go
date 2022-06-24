@@ -18,7 +18,7 @@ import (
 
 // Attempt 尝试登录
 func Attempt(email string, password string) (user.User, error) {
-	userEntity := user.GetByMulti(email)
+	userEntity := user.FindByMulti(email)
 	if userEntity.ID == 0 {
 		return user.User{}, errors.New("账号不存在")
 	}
@@ -32,7 +32,7 @@ func Attempt(email string, password string) (user.User, error) {
 
 // LoginByPhone 登录指定用户
 func LoginByPhone(phone string) (user.User, error) {
-	userEntity := user.GetByPhoneNumber(phone)
+	userEntity := user.FindByPhoneNumber(phone)
 	if userEntity.ID == 0 {
 		return user.User{}, errors.New("手机号未注册")
 	}
