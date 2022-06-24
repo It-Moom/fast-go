@@ -1,6 +1,0 @@
-package intf
-
-// {{StructName}} 实体类接口
-type {{StructName}}Intf interface {
-	BaseEntityIntf
-}
