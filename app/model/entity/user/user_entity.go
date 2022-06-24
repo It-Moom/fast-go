@@ -30,17 +30,17 @@ type User struct {
 }
 
 // Create 创建用户，通过 User.ID 来判断是否创建成功
-func (userModel *User) Create() {
-	database.DB.Create(&userModel)
+func (userEntity *User) Create() {
+	database.DB.Create(&userEntity)
 }
 
 // ComparePassword 密码是否正确
-func (userModel *User) ComparePassword(_password string) bool {
-	return secure.BcryptCheck(_password, userModel.Password)
+func (userEntity *User) ComparePassword(_password string) bool {
+	return secure.BcryptCheck(_password, userEntity.Password)
 }
 
 // Save 保存用户
-func (userModel *User) Save() (rowsAffected int64) {
-	result := database.DB.Save(&userModel)
+func (userEntity *User) Save() (rowsAffected int64) {
+	result := database.DB.Save(&userEntity)
 	return result.RowsAffected
 }
