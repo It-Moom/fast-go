@@ -26,7 +26,7 @@ func IsEmailExist(email string) bool {
 // IsPhoneExist 判断手机号已被注册
 func IsPhoneExist(phone string) bool {
 	var count int64
-	database.DB.Model(User{}).Where("phone = ?", phone).Count(&count)
+	database.DB.Model(User{}).Where("phone_number = ?", phone).Count(&count)
 	return count > 0
 }
 
@@ -39,7 +39,7 @@ func GetByPhoneNumber(phone string) (userEntity User) {
 // GetByMulti 通过 手机号/Email/用户名 来获取用户
 func GetByMulti(loginID string) (userEntity User) {
 	database.DB.
-		Where("phone = ?", loginID).
+		Where("phone_number = ?", loginID).
 		Or("email = ?", loginID).
 		Or("name = ?", loginID).
 		First(&userEntity)
