@@ -29,16 +29,16 @@ func AuthJWT() gin.HandlerFunc {
 		}
 
 		// JWT 解析成功，设置用户信息
-		userModel := user.FindById(claims.SubjectID)
-		if userModel.ID == 0 {
+		userEntity := user.FindById(claims.SubjectID)
+		if userEntity.ID == 0 {
 			http_response.TokenExpired(c, "用户不存在")
 			return
 		}
 
 		// 将用户信息存入 gin.context 里，后续 auth 包将从这里拿到当前用户数据
-		c.Set("current_user_id", userModel.GetStringID())
-		c.Set("current_user_name", userModel.Name)
-		c.Set("current_user", userModel)
+		c.Set("current_user_id", userEntity.GetStringID())
+		c.Set("current_user_name", userEntity.Name)
+		c.Set("current_user", userEntity)
 
 		c.Next()
 	}
