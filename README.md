@@ -68,7 +68,7 @@
 | [gorm](https://github.com/go-gorm/gorm)                    | ORM框架        |
 | [gorm-mysql](https://github.com/go-gorm/mysql)             | GORM-MySQL依赖 |
 | [viper](https://github.com/spf13/viper)                    | 配置文件处理       |
-| [jwt](https://github.com/dgrijalva/jwt-go)                 | JWT          |
+| [jwt](https://github.com/golang-jwt/jwt)                   | JWT          |
 | [go.uuid](https://github.com/satori/go.uuid)               | UUID生成器      |
 | [zap](https://github.com/uber-go/zap)                      | 日志处理扩展       |
 | [lumberjack](https://github.com/natefinch/lumberjack)      | 日志滚动方案       |
