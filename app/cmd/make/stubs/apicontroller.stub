@@ -1,25 +1,29 @@
 package v1
 
 import (
-    "fast-go/app/model/entity/{{PackageName}}"
-    "fast-go/app/policies"
-    "fast-go/app/http/request"
     "fast-go/app/handler/http_response"
+    "fast-go/app/http/controller/api"
+    httpreq "fast-go/app/http/request"
+    "fast-go/app/model/entity/{{PackageName}}"
+    "fast-go/app/policy"
 
     "github.com/gin-gonic/gin"
 )
 
+// {{StructName}}Controller {{StructName}}控制器
 type {{StructName}}Controller struct {
-    BaseAPIController
+    api.BaseAPIController
 }
 
-func (ctrl *{{StructName}}Controller) Index(c *gin.Context) {
+// ListAll 获取{{StructName}}列表数据
+func (ctrl *{{StructName}}Controller) ListAll(c *gin.Context) {
     {{VariableNamePlural}} := {{PackageName}}.All()
     http_response.RequestSuccess(c, {{VariableNamePlural}})
 }
 
-func (ctrl *{{StructName}}Controller) Show(c *gin.Context) {
-    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+// ShowOne 获取{{StructName}}详情数据
+func (ctrl *{{StructName}}Controller) ShowOne(c *gin.Context) {
+    {{VariableName}}Entity := {{PackageName}}.FindById(c.Param("id"))
     if {{VariableName}}Entity.ID == 0 {
         http_response.QueryVoid(c, "{{StructName}}不存在")
         return
@@ -27,10 +31,11 @@ func (ctrl *{{StructName}}Controller) Show(c *gin.Context) {
     http_response.RequestSuccess(c, {{VariableName}}Entity)
 }
 
+// Store 创建{{StructName}}数据
 func (ctrl *{{StructName}}Controller) Store(c *gin.Context) {
 
-    request := requests.{{StructName}}Request{}
-    if ok := requests.Validate(c, &request, requests.{{StructName}}Save); !ok {
+    request := httpreq.{{StructName}}Request{}
+    if ok := httpreq.Validate(c, &request, httpreq.{{StructName}}Save); !ok {
         return
     }
 
@@ -45,21 +50,22 @@ func (ctrl *{{StructName}}Controller) Store(c *gin.Context) {
     }
 }
 
+// Update 更新{{StructName}}数据
 func (ctrl *{{StructName}}Controller) Update(c *gin.Context) {
 
-    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+    {{VariableName}}Entity := {{PackageName}}.FindById(c.Param("id"))
     if {{VariableName}}Entity.ID == 0 {
         http_response.QueryVoid(c, "{{StructName}}不存在")
         return
     }
 
-    if ok := policies.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
+    if ok := policy.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
         http_response.PermissionDeny(c, "无权修改{{StructName}}")
         return
     }
 
-    request := requests.{{StructName}}Request{}
-    bindOk, errs := requests.Validate(c, &request, requests.{{StructName}}Save)
+    request := httpreq.{{StructName}}Request{}
+    bindOk, errs := httpreq.Validate(c, &request, httpreq.{{StructName}}Save)
     if !bindOk {
         return
     }
@@ -78,15 +84,16 @@ func (ctrl *{{StructName}}Controller) Update(c *gin.Context) {
 	}
 }
 
+// Delete 删除{{StructName}}数据
 func (ctrl *{{StructName}}Controller) Delete(c *gin.Context) {
 
-    {{VariableName}}Entity := {{PackageName}}.Get(c.Param("id"))
+    {{VariableName}}Entity := {{PackageName}}.FindById(c.Param("id"))
     if {{VariableName}}Entity.ID == 0 {
 		http_response.QueryVoid(c, "{{StructName}}不存在")
         return
     }
 
-    if ok := policies.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
+    if ok := policy.CanModify{{StructName}}(c, {{VariableName}}Entity); !ok {
         http_response.PermissionDeny(c, "无权修改{{StructName}}")
         return
     }

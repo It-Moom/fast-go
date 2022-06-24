@@ -43,10 +43,12 @@ import (
 //     "PackageName": "topic_comment"
 // }
 type Entity struct {
-	TableName    string
-	StructName   string
-	VariableName string
-	PackageName  string
+	TableName          string
+	StructName         string
+	StructNamePlural   string
+	VariableName       string
+	PackageName        string
+	VariableNamePlural string
 }
 
 // stubsFS 方便我们后面打包这些 .stub 为后缀名的文件
@@ -79,9 +81,11 @@ func init() {
 func makeEntityFromString(name string) Entity {
 	entity := Entity{}
 	entity.StructName = str.Singular(strcase.ToCamel(name))
+	entity.StructNamePlural = str.Plural(entity.StructName)
 	entity.TableName = str.Snake(entity.StructName)
 	entity.VariableName = str.LowerCamel(entity.StructName)
 	entity.PackageName = str.Snake(entity.StructName)
+	entity.VariableNamePlural = str.LowerCamel(entity.StructNamePlural)
 	return entity
 }
 
@@ -109,7 +113,9 @@ func createFileFromStub(filePath string, stubName string, entity Entity, variabl
 
 	// 添加默认的替换变量
 	replaces["{{VariableName}}"] = entity.VariableName
+	replaces["{{VariableNamePlural}}"] = entity.VariableNamePlural
 	replaces["{{StructName}}"] = entity.StructName
+	replaces["{{StructNamePlural}}"] = entity.StructNamePlural
 	replaces["{{PackageName}}"] = entity.PackageName
 	replaces["{{TableName}}"] = entity.TableName
 
