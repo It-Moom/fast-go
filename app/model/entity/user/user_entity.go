@@ -44,3 +44,9 @@ func (userEntity *User) Save() (rowsAffected int64) {
 	result := database.DB.Save(&userEntity)
 	return result.RowsAffected
 }
+
+// Delete 删除用户
+func (userEntity *User) Delete() (rowsAffected int64) {
+	result := database.DB.Delete(&userEntity)
+	return result.RowsAffected
+}
