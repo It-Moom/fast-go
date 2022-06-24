@@ -26,9 +26,9 @@ type Migrator struct {
 
 // Migration 对应数据的 migration 表里的一条数据
 type Migration struct {
-	ID        uint64 `gorm:"primaryKey;autoIncrement;"`
-	Migration string `gorm:"type:varchar(255);not null;unique;"`
-	Batch     int
+	ID        uint64 `gorm:"primaryKey;autoIncrement;comment:迁移记录ID"`
+	Migration string `gorm:"type:varchar(255);not null;unique;comment:迁移文件名称"`
+	Batch     int    `gorm:"not null;comment:批次"`
 }
 
 // NewMigrator 创建 Migrator 实例，用以执行迁移操作

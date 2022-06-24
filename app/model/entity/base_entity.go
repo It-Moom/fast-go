@@ -16,14 +16,12 @@ import (
 
 // BaseEntity 基础实体
 type BaseEntity struct {
-	ID        uint           `gorm:"primaryKey;autoIncrement;comment:主键ID"`
-	CreatedAt time.Time      `gorm:"autoCreateTime;comment:创建时间"`
-	UpdatedAt time.Time      `gorm:"autoUpdateTime;comment:更新时间"`
-	DeletedAt gorm.DeletedAt `gorm:"index;comment:删除时间"`
+	ID uint64 `gorm:"primaryKey;autoIncrement;comment:主键ID"`
 }
 
 // CommonTimestampsField 时间戳
 type CommonTimestampsField struct {
-	CreatedAt time.Time `gorm:"column:created_at;index;" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"column:updated_at;index;" json:"updated_at,omitempty"`
+	CreatedAt time.Time      `gorm:"column:created_at;index;comment:创建时间" json:"created_at,omitempty"`
+	UpdatedAt time.Time      `gorm:"column:updated_at;index;comment:更新时间" json:"updated_at,omitempty"`
+	DeletedAt gorm.DeletedAt `gorm:"index;comment:删除时间"`
 }
