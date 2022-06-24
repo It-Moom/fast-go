@@ -1,0 +1,24 @@
+package impl
+
+type {{StructName}}Impl struct {
+}
+
+// FindById 根据 id 查找实体数据
+func (ui *{{StructName}}Impl) FindById(id int64) error {
+	return nil
+}
+
+// GetAll 获取所有实体数据
+func (ui *{{StructName}}Impl) GetAll() ([]interface{}, error) {
+	return nil, nil
+}
+
+// UpdateById 更新实体数据
+func (ui *{{StructName}}Impl) UpdateById(id int64, data interface{}) error {
+	return nil
+}
+
+// DeleteById 删除实体数据
+func (ui *{{StructName}}Impl) DeleteById(id int64) error {
+	return nil
+}
