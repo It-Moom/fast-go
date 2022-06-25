@@ -33,23 +33,23 @@ func (ctrl *UserController) ShowOne(c *gin.Context) {
 
 // Store 创建User数据
 func (ctrl *UserController) Store(c *gin.Context) {
-	//
-	//// 参数校验
-	//request := httpreq.UserRequest{}
-	//if ok := httpreq.Validate(c, &request, httpreq.UserSave); !ok {
-	//	return
-	//}
-	//
-	//userEntity := user.User{
-	//	Email: request.Email,
-	//	Name:  request.Name,
-	//}
-	//userEntity.Create()
-	//if userEntity.ID > 0 {
-	//	http_response.RequestSuccess(c, userEntity)
-	//} else {
-	//	http_response.RequestError(c, "创建User失败")
-	//}
+
+	// 参数校验
+	request := httpreq.UserRequest{}
+	if ok := httpreq.Validate(c, &request, httpreq.UserSave); !ok {
+		return
+	}
+
+	userEntity := user.User{
+		Email: request.Email,
+		Name:  request.Name,
+	}
+	userEntity.Create()
+	if userEntity.ID > 0 {
+		http_response.RequestSuccess(c, userEntity)
+	} else {
+		http_response.RequestError(c, "创建User失败")
+	}
 }
 
 // Update 更新User数据
