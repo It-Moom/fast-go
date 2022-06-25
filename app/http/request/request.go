@@ -11,6 +11,7 @@ package request
 
 import (
 	"fast-go/app/handler/http_response"
+	_ "fast-go/app/http/request/validators"
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"
 )
@@ -36,7 +37,13 @@ func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 
 	// 3. 判断验证是否通过
 	if len(errs) > 0 {
-		http_response.ParamError(c, errs)
+		// 循环取出map[string][]string中的[]string消息
+		var messages []string
+		for _, v := range errs {
+			messages = append(messages, v...)
+		}
+		// 返回错误信息
+		http_response.ParamError(c, messages)
 		return false
 	}
 
