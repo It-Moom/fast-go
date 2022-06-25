@@ -26,9 +26,8 @@ func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 
 	// 1. 解析请求，支持 JSON 数据、表单请求和 URL Query
 	if err := c.ShouldBind(obj); err != nil {
-		// 创建 []string 类型的错误信息
-		errors := []string{"请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。"}
-		http_response.RequestError(c, err, errors)
+		// 请求解析失败
+		http_response.RequestError(c, "请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。")
 		return false
 	}
 
