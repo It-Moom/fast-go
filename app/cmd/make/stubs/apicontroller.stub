@@ -65,12 +65,7 @@ func (ctrl *{{StructName}}Controller) Update(c *gin.Context) {
     }
 
     request := httpreq.{{StructName}}Request{}
-    bindOk, errs := httpreq.Validate(c, &request, httpreq.{{StructName}}Save)
-    if !bindOk {
-        return
-    }
-    if len(errs) > 0 {
-        http_response.ParamError(c, errs)
+    if ok := httpreq.Validate(c, &request, httpreq.{{StructName}}Save);!ok {
         return
     }
 
