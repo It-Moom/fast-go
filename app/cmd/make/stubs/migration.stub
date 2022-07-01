@@ -2,7 +2,7 @@ package migrations
 
 import (
 	"database/sql"
-	"fast-go/app/model/entity/user"
+	"fast-go/app/model/entity/{{PackageName}}"
 	"fast-go/pkg/migrate"
 
 	"gorm.io/gorm"
