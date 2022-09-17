@@ -13,6 +13,7 @@ import (
 	"fast-go/app/model/entity/user"
 	"fast-go/pkg/helpers"
 	"github.com/bxcodec/faker/v3"
+	"github.com/emvi/null"
 	"time"
 )
 
@@ -26,10 +27,10 @@ func MakeUser(times int) []user.User {
 	for i := 0; i < times; i++ {
 		entity := user.User{
 			Name:            faker.Username(),
-			Email:           faker.Email(),
-			PhoneNumber:     helpers.RandomNumber(11),
+			Email:           null.NewString(faker.Email(), true),
+			PhoneNumber:     null.NewString(helpers.RandomNumber(11), true),
 			Password:        "$2a$14$oPzVkIdwJ8KqY0erYAYQxOuAAlbI/sFIsH0C0R4MPc.3JbWWSuaUe",
-			EmailVerifiedAt: time.Now(),
+			EmailVerifiedAt: null.NewTime(time.Now(), true),
 		}
 		objs = append(objs, entity)
 	}

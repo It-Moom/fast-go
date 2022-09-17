@@ -13,8 +13,42 @@ import (
 	"fast-go/pkg/app"
 	"fast-go/pkg/database"
 	"fast-go/pkg/paginator"
+	"fast-go/pkg/utils/secure"
 	"github.com/gin-gonic/gin"
 )
+
+// GetAll 查询所有用户
+func GetAll() (users []User) {
+	database.DB.Find(&users)
+	return users
+}
+
+// FindByID 根据ID查询用户,找不到则返回空
+func FindByID(id int) (user User) {
+	result := database.DB.Where("id = ?", id).First(&user)
+	if result.RowsAffected == 0 || result.Error != nil {
+		return User{}
+	}
+	return user
+}
+
+// Create 创建用户，返回创建的用户
+func Create(userEntity *User) (user User) {
+	database.DB.Create(&userEntity)
+	return *userEntity
+}
+
+// Update 更新用户,返回保存的用户
+func Update(userEntity *User) (user User) {
+	database.DB.Save(&userEntity)
+	return *userEntity
+}
+
+// Delete 删除用户
+func Delete(userEntity *User) (rowsAffected int64) {
+	result := database.DB.Delete(&userEntity)
+	return result.RowsAffected
+}
 
 // IsEmailExist 判断 Email 已被注册
 func IsEmailExist(email string) bool {
@@ -46,22 +80,15 @@ func FindByMulti(loginID string) (userEntity User) {
 	return
 }
 
-// FindById 通过 ID 获取用户
-func FindById(idstr string) (userEntity User) {
-	database.DB.Where("id", idstr).First(&userEntity)
-	return
-}
-
 // FindByEmail 通过 Email 来获取用户
 func FindByEmail(email string) (userEntity User) {
 	database.DB.Where("email = ?", email).First(&userEntity)
 	return
 }
 
-// All 获取所有用户数据
-func All() (users []User) {
-	database.DB.Find(&users)
-	return
+// ComparePassword 密码是否正确
+func (userEntity *User) ComparePassword(_password string) bool {
+	return secure.BcryptCheck(_password, userEntity.Password)
 }
 
 // Paginate 分页内容

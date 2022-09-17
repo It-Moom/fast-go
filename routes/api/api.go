@@ -44,9 +44,9 @@ func RegisterApiRoutes(r *gin.Engine) {
 			// 用户数据
 			userGroup.GET("/info/:id", uc.ShowOne)
 			// 用户列表
-			userGroup.GET("/list", uc.ListAll)
+			userGroup.GET("/list", uc.GetAll)
 			// 新增用户
-			userGroup.POST("/store", uc.Store)
+			userGroup.POST("/create", uc.Create)
 			// 更新用户
 			userGroup.PUT("/update/:id", uc.Update)
 			// 删除用户

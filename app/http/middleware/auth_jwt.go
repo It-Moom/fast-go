@@ -14,6 +14,7 @@ import (
 	"fast-go/app/model/entity/user"
 	"fast-go/pkg/utils/jwt"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 )
 
 func AuthJWT() gin.HandlerFunc {
@@ -29,16 +30,17 @@ func AuthJWT() gin.HandlerFunc {
 		}
 
 		// JWT 解析成功，设置用户信息
-		userEntity := user.FindById(claims.SubjectID)
-		if userEntity.ID == 0 {
+		// 传入的参数ID转为int
+		_user := user.FindByID(cast.ToInt(claims.SubjectID))
+		if _user.ID == 0 {
 			http_response.TokenExpired(c, "用户不存在")
 			return
 		}
 
 		// 将用户信息存入 gin.context 里，后续 auth 包将从这里拿到当前用户数据
-		c.Set("current_user_id", userEntity.GetStringID())
-		c.Set("current_user_name", userEntity.Name)
-		c.Set("current_user", userEntity)
+		c.Set("current_user_id", _user.GetStringID())
+		c.Set("current_user_name", _user.Name)
+		c.Set("current_user", _user)
 
 		c.Next()
 	}
