@@ -28,6 +28,7 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/sony/sonyflake v1.1.0 // indirect
 )
 
 require (
