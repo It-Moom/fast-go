@@ -14,12 +14,22 @@ log:
 
 # 数据库配置
 database:
-  driver: mysql
-  host: 127.0.0.1
-  port: 3306
-  database: fast_go
-  username: root
-  password: root
+  default: main_db
+  connections:
+    main_db:
+      driver: mysql
+      host: 127.0.0.1
+      port: 3306
+      database: test1
+      username: root
+      password: root
+    log_db:
+      driver: mysql
+      host: 127.0.0.1
+      port: 3306
+      database: test2
+      username: root
+      password: root
 
 # redis配置
 redis:

@@ -4,7 +4,7 @@
  * @Author: gabbymrh
  * @Date: 2022-06-22 17:26:53
  * @Last Modified by: gabbymrh
- * @Last Modified time: 2022-06-22 17:26:53
+ * @Last Modified time: 2023-12-18 17:26:53
  */
 
 package database
@@ -14,7 +14,10 @@ import (
 	"errors"
 	"fast-go/pkg/config"
 	"fmt"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm/schema"
+	"time"
 
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
@@ -24,9 +27,96 @@ import (
 var DB *gorm.DB
 var SQLDB *sql.DB
 
-// Connect 连接数据库
-func Connect(dbConfig gorm.Dialector, _logger gormlogger.Interface) {
+// DBEnvConfig 数据库环境配置
+type DBEnvConfig struct {
+	// 数据库配置
+	Database struct {
+		// 默认数据库
+		Default string
+		// 数据库连接池
+		Connections map[string]Connection
+	}
+}
 
+// Connection 数据库连接配置
+type Connection struct {
+	// 驱动
+	Driver string
+	// 主机
+	Host string
+	// 端口
+	Port int
+	// 数据库名
+	Database string
+	// 用户名
+	Username string
+	// 密码
+	Password string
+	// 字符集
+	Charset string
+	// 最大连接数
+	MaxOpenConn int
+	// 最大空闲连接数
+	MaxIdleConn int
+	// 连接过期时间
+	MaxLifetime int
+}
+
+// Connect 连接数据库
+func Connect(connection Connection, _logger gormlogger.Interface) {
+	// 默认数据库驱动
+	if connection.Driver == "" {
+		connection.Driver = "mysql"
+	}
+	// 遍历数据库驱动
+	switch connection.Driver {
+	case "mysql":
+		// 连接 mysql
+		mySqlConnect(connection, _logger)
+	case "sqlite":
+		// 连接 sqlite
+		db := connection.Database
+		sqlite.Open(db)
+	default:
+		// 未知驱动
+		panic(errors.New("Unknown driver"))
+	}
+}
+
+// mySqlConnect 连接 mysql
+func mySqlConnect(connection Connection, _logger gormlogger.Interface) {
+	// 设置默认字符集
+	if connection.Charset == "" {
+		connection.Charset = "utf8mb4"
+	}
+	// 设置默认端口
+	if connection.Port == 0 {
+		connection.Port = 3306
+	}
+	// 设置默认最大连接数
+	if connection.MaxOpenConn == 0 {
+		connection.MaxOpenConn = 100
+	}
+	// 设置默认最大空闲连接数
+	if connection.MaxIdleConn == 0 {
+		connection.MaxIdleConn = 10
+	}
+	// 设置默认连接过期时间
+	if connection.MaxLifetime == 0 {
+		connection.MaxLifetime = 60
+	}
+	// 构建DSN信息
+	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&multiStatements=true&loc=Local",
+		connection.Username,
+		connection.Password,
+		connection.Host,
+		connection.Port,
+		connection.Database,
+		connection.Charset,
+	)
+	dbConfig := mysql.New(mysql.Config{
+		DSN: dsn,
+	})
 	// 使用 gorm.Open 连接数据库
 	var err error
 	DB, err = gorm.Open(dbConfig, &gorm.Config{
@@ -44,8 +134,26 @@ func Connect(dbConfig gorm.Dialector, _logger gormlogger.Interface) {
 	// 获取底层的 sqlDB
 	SQLDB, err = DB.DB()
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println("获取底层SQL DB出错" + err.Error())
 	}
+	// 设置最大连接数
+	SQLDB.SetMaxOpenConns(connection.MaxOpenConn)
+	// 设置最大空闲连接数
+	SQLDB.SetMaxIdleConns(connection.MaxIdleConn)
+	// 设置连接过期时间
+	SQLDB.SetConnMaxLifetime(time.Duration(connection.MaxLifetime) * time.Second)
+}
+
+// SwitchDB 切换数据源
+func SwitchDB(connection Connection) {
+	// 关闭当前数据库连接
+	err := SQLDB.Close()
+	if err != nil {
+		fmt.Println("切换数据源出错" + err.Error())
+	}
+
+	// 重新连接数据库
+	Connect(connection, nil)
 }
 
 func CurrentDatabase() (dbname string) {

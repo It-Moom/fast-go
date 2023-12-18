@@ -11,6 +11,7 @@ package config
 
 import (
 	"fast-go/pkg/helpers"
+	"fmt"
 	"os"
 
 	"github.com/spf13/cast"
@@ -102,6 +103,16 @@ func Add(name string, configFn ConfigFunc) {
 	ConfigFuncs[name] = configFn
 }
 
+// ViperUnMarshal Viper 反序列化
+func ViperUnMarshal(v interface{}) interface{} {
+	err := viper.Unmarshal(v)
+	if err != nil {
+		fmt.Println("Unmarshal Error:", err)
+		return nil
+	}
+	return v
+}
+
 // Get 获取配置项
 // 第一个参数 path 允许使用点式获取，如：app.name
 // 第二个参数允许传参默认值
@@ -151,7 +162,12 @@ func GetBool(path string, defaultValue ...interface{}) bool {
 	return cast.ToBool(internalGet(path, defaultValue...))
 }
 
-// GetStringMapString 获取结构数据
+// ViperGetStringMap 获取结构数据
+func ViperGetStringMap(path string) map[string]interface{} {
+	return viper.GetStringMap(path)
+}
+
+// GetStringMapString 获取结构数据(字符串)
 func GetStringMapString(path string) map[string]string {
 	return viper.GetStringMapString(path)
 }
