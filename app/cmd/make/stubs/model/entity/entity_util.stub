@@ -7,6 +7,21 @@ import (
     "github.com/gin-gonic/gin"
 )
 
+
+func ({{VariableName}} *{{StructName}}) Create() {
+    database.DB.Create(&{{VariableName}})
+}
+
+func ({{VariableName}} *{{StructName}}) Save() (rowsAffected int64) {
+    result := database.DB.Save(&{{VariableName}})
+    return result.RowsAffected
+}
+
+func ({{VariableName}} *{{StructName}}) Delete() (rowsAffected int64) {
+    result := database.DB.Delete(&{{VariableName}})
+    return result.RowsAffected
+}
+
 func FindById(idstr string) ({{VariableName}} {{StructName}}) {
     database.DB.Where("id", idstr).First(&{{VariableName}})
     return
