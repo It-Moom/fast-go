@@ -145,34 +145,42 @@ func mySqlConnect(connection Connection, _logger gormlogger.Interface) {
 }
 
 // SwitchDB 切换数据源
-func SwitchDB(connection Connection) {
+func SwitchDB(connName string) *gorm.DB {
 	// 关闭当前数据库连接
 	err := SQLDB.Close()
 	if err != nil {
 		fmt.Println("切换数据源出错" + err.Error())
 	}
 
-	// 重新连接数据库
-	Connect(connection, nil)
+	// 重新连接数据库,获取数据库配置
+	var dbEnvConfig DBEnvConfig
+	config.ViperUnMarshal(&dbEnvConfig)
+	conn := dbEnvConfig.Database.Connections[connName]
+	if conn.Database == "" {
+		panic(errors.New("Unknown Connection"))
+	}
+	// 数据库连接
+	Connect(conn, nil)
+	return DB
 }
 
+// CurrentDatabase 获取当前数据库名
 func CurrentDatabase() (dbname string) {
 	dbname = DB.Migrator().CurrentDatabase()
 	return
 }
 
+// DeleteAllTables 删除所有数据表
 func DeleteAllTables() error {
-	var err error
-	switch config.Get("database.connection") {
+	// 判断当前数据库类型
+	switch DB.Dialector.Name() {
 	case "mysql":
-		err = deleteMySQLTables()
+		return deleteMySQLTables()
 	case "sqlite":
-		deleteAllSqliteTables()
+		return deleteAllSqliteTables()
 	default:
-		panic(errors.New("database connection not supported"))
+		return errors.New("Unknown database type")
 	}
-
-	return err
 }
 
 func deleteAllSqliteTables() error {
