@@ -49,7 +49,7 @@ type Connection struct {
 	// 数据库名
 	Database string
 	// 表前缀
-	TablePrefix string
+	TablePrefix string `mapstructure:"table_prefix"`
 	// 用户名
 	Username string
 	// 密码

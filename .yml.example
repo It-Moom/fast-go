@@ -14,14 +14,14 @@ log:
 
 # 数据库配置
 database:
-  default: mainDB
+  default: main_db
   connections:
-    mainDB:
+    main_db:
       driver: mysql
       host: 127.0.0.1
       port: 3306
       database: test1
-      tablePrefix: fg_
+      table_prefix: fg_
       username: root
       password: root
     logDB:
@@ -29,7 +29,7 @@ database:
       host: 127.0.0.1
       port: 3306
       database: test2
-      tablePrefix: fg_
+      table_prefix: fg_
       username: root
       password: root
 
@@ -47,5 +47,5 @@ session:
 # jwt配置
 jwt:
   secret: fast-go
-  tokenName: Authorization
+  token_name: Authorization
   ttl: 604800

@@ -17,7 +17,7 @@ func init() {
 			// jwt 密钥
 			"secret": config.Env("jwt.secret", "fast-go"),
 			// token标识名称
-			"token_name": config.Env("jwt.tokenName", "Authorization"),
+			"token_name": config.Env("jwt.token_name", "Authorization"),
 
 			// jwt 有效时间:单位秒,默认1小时过期
 			"ttl": config.Env("jwt.ttl", 3600),
