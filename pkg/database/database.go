@@ -48,6 +48,8 @@ type Connection struct {
 	Port int
 	// 数据库名
 	Database string
+	// 表前缀
+	TablePrefix string
 	// 用户名
 	Username string
 	// 密码
@@ -124,6 +126,7 @@ func mySqlConnect(connection Connection, _logger gormlogger.Interface) {
 		// 关闭表名复数形式
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
+			TablePrefix:   connection.TablePrefix,
 		},
 	})
 	// 处理错误
