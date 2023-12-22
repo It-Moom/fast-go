@@ -28,12 +28,13 @@ func SetupDB() {
 	defaultDb := dbEnvConfig.Database.Default
 	// 构建连接属性
 	dbConnection = database.Connection{
-		Host:     dbEnvConfig.Database.Connections[defaultDb].Host,
-		Port:     dbEnvConfig.Database.Connections[defaultDb].Port,
-		Username: dbEnvConfig.Database.Connections[defaultDb].Username,
-		Password: dbEnvConfig.Database.Connections[defaultDb].Password,
-		Database: dbEnvConfig.Database.Connections[defaultDb].Database,
-		Charset:  dbEnvConfig.Database.Connections[defaultDb].Charset,
+		Host:        dbEnvConfig.Database.Connections[defaultDb].Host,
+		Port:        dbEnvConfig.Database.Connections[defaultDb].Port,
+		Username:    dbEnvConfig.Database.Connections[defaultDb].Username,
+		Password:    dbEnvConfig.Database.Connections[defaultDb].Password,
+		Database:    dbEnvConfig.Database.Connections[defaultDb].Database,
+		TablePrefix: dbEnvConfig.Database.Connections[defaultDb].TablePrefix,
+		Charset:     dbEnvConfig.Database.Connections[defaultDb].Charset,
 	}
 
 	// 连接数据库，并设置 GORM 的日志模式(此处采用自定义的日志模式)
