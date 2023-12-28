@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	redis "github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 )
 
 // RedisClient Redis 服务

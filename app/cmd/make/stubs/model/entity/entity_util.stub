@@ -28,7 +28,7 @@ func FindById(idstr string) ({{VariableName}} {{StructName}}) {
 }
 
 func FindBy(field, value string) ({{VariableName}} {{StructName}}) {
-    database.DB.Where("? = ?", field, value).First(&{{VariableName}})
+    database.DB.Where(field, value).First(&{{VariableName}})
     return
 }
 
